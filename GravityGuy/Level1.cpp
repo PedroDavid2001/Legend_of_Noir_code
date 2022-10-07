@@ -17,7 +17,6 @@
 #include "Player.h"
 #include "Platform.h"
 #include "Background.h"
-
 #include <string>
 #include <fstream>
 using std::ifstream;
@@ -34,6 +33,8 @@ void Level1::Init()
 {
     // cria gerenciador de cena
     scene = new Scene();
+
+    timer.Start();
 
     // pano de fundo do jogo
     backg = new Background(Color{ 1,1,1,1 });
@@ -88,6 +89,12 @@ void Level1::Init()
 
 void Level1::Update()
 {
+    if (timer.Elapsed() > 0.2f) {
+        snow = new Snow();
+        scene->Add(snow, STATIC);
+        timer.Reset();
+    }
+
     if (window->KeyPress(VK_ESCAPE))
     {
         GravityGuy::audio->Stop(MUSIC);

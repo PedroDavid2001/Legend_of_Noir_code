@@ -17,15 +17,13 @@
 
 Player::Player()
 {
-    tileset = new TileSet("Resources/GravityGuy.png", 32, 48, 5, 10);
+    tileset = new TileSet("Resources/sprite.png", 65, 134, 7, 7);
     anim = new Animation(tileset, 0.120f, true);
 
-    // sequências de animação do player
-    uint invert[4] = {6,7,8,9};
-    uint normal[4] = {1,2,3,4};
 
-    anim->Add(INVERTED, invert, 4);
-    anim->Add(NORMAL, normal, 4);
+    uint stoped[7] = { 0,1,2,3,4,5,6 };
+
+    anim->Add(0, stoped, 7);
 
     // cria bounding box
     BBox(new Rect(
@@ -39,7 +37,7 @@ Player::Player()
     level = 0;
 
     // posição inicial
-    MoveTo(window->CenterX(), 24.0f, Layer::FRONT);
+    MoveTo(window->CenterX(), 24.0f, Layer::MIDDLE);
 }
 
 // ---------------------------------------------------------------------------------
@@ -55,7 +53,7 @@ Player::~Player()
 void Player::Reset()
 {
     // volta ao estado inicial
-    MoveTo(window->CenterX(), 24.0f, Layer::FRONT);
+    MoveTo(window->CenterX(), 24.0f, Layer::MIDDLE);
     gravity = NORMAL;
     level = 0;
 }
@@ -74,9 +72,9 @@ void Player::OnCollision(Object * obj)
     {
         // mantém personagem em cima da plataforma
         if (gravity == NORMAL)
-            MoveTo(window->CenterX(), obj->Y() - 32);
+            MoveTo(window->CenterX(), obj->Y() - 65);
         else
-            MoveTo(window->CenterX(), obj->Y() + 32);
+            MoveTo(window->CenterX(), obj->Y() + 65);
     }
 
     // ----------------------------------------------------------

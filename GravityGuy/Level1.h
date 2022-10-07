@@ -18,6 +18,8 @@
 #include "Game.h"
 #include "Scene.h"
 #include "Player.h"
+#include "Timer.h"
+#include "Snow.h"
 #include "Background.h"
 
 // ------------------------------------------------------------------------------
@@ -26,7 +28,8 @@ class Level1 : public Game
 {
 private:
     Background* backg = nullptr;   // pano de fundo animado
-
+    Snow* snow = nullptr;
+    Timer timer;
 public:
     static Scene* scene;           // cena do nível
 
