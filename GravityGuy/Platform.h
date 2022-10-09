@@ -39,6 +39,8 @@ public:
 
     void Update();                          // atualização do objeto
     void Draw();                            // desenho do objeto
+    float Height();
+    float Width();
 }; 
 
 // ---------------------------------------------------------------------------------
@@ -46,6 +48,16 @@ public:
 
 inline void Platform::Draw()
 { platform->Draw(x, y, z, GravityGuy::totalScale, 0.0f, color); }
+
+inline float Platform::Height() 
+{
+    return platform->Height();
+}
+
+inline float Platform::Width()
+{
+    return platform->Width();
+}
 
 // ---------------------------------------------------------------------------------
 

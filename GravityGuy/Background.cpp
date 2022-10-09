@@ -59,37 +59,37 @@ void Background::Update()
 	if (playerDist < 0)
 		playerDist = -playerDist;
 
-	if (playerDist <= 2.0f) {
+	if (playerDist <= 10.0f) {
 		if (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) {
 			// move as nuvens quando estiver andando
-			posC1 -= 50 * gameTime;
-			posC2 -= 50 * gameTime;
-			posB11 -= 200 * gameTime;
-			posB12 -= 200 * gameTime;
-			posB21 -= 100 * gameTime;
-			posB22 -= 100 * gameTime;
-			posB31 -= 50 * gameTime;
-			posB32 -= 50 * gameTime;
+			posC1  -= (PLAYER_VELOCITY / 4.0f) * gameTime;
+			posC2  -= (PLAYER_VELOCITY / 4.0f) * gameTime;
+			posB11 -= PLAYER_VELOCITY * gameTime;
+			posB12 -= PLAYER_VELOCITY * gameTime;
+			posB21 -= (PLAYER_VELOCITY / 2.0f) * gameTime;
+			posB22 -= (PLAYER_VELOCITY / 2.0f) * gameTime;
+			posB31 -= (PLAYER_VELOCITY / 4.0f) * gameTime;
+			posB32 -= (PLAYER_VELOCITY / 4.0f) * gameTime;
 		}
 		else if (window->KeyDown(VK_LEFT) || window->KeyDown('A')) {
 			// move as nuvens quando estiver andando
-			posC1 += 50 * gameTime;
-			posC2 += 50 * gameTime;
-			posB11 += 200 * gameTime;
-			posB12 += 200 * gameTime;
-			posB21 += 100 * gameTime;
-			posB22 += 100 * gameTime;
-			posB31 += 50 * gameTime;
-			posB32 += 50 * gameTime;
+			posC1  += (PLAYER_VELOCITY / 4.0f) * gameTime;
+			posC2  += (PLAYER_VELOCITY / 4.0f) * gameTime;
+			posB11 += PLAYER_VELOCITY * gameTime;
+			posB12 += PLAYER_VELOCITY * gameTime;
+			posB21 += (PLAYER_VELOCITY / 2.0f) * gameTime;
+			posB22 += (PLAYER_VELOCITY / 2.0f) * gameTime;
+			posB31 += (PLAYER_VELOCITY / 4.0f) * gameTime;
+			posB32 += (PLAYER_VELOCITY / 4.0f) * gameTime;
 		}
 		else {
-			posC1 -= 10 * gameTime;
-			posC2 -= 10 * gameTime;
+			posC1 -= (PLAYER_VELOCITY / 20.0f) * gameTime;
+			posC2 -= (PLAYER_VELOCITY / 20.0f) * gameTime;
 		}
    }
 	else {
-		posC1 -= 10 * gameTime;
-		posC2 -= 10 * gameTime;
+		posC1 -= (PLAYER_VELOCITY / 20.0f) * gameTime;
+		posC2 -= (PLAYER_VELOCITY / 20.0f) * gameTime;
 	}
 }
 

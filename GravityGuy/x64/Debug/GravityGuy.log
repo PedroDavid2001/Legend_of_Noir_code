@@ -1,2 +1,4 @@
-﻿  Platform.cpp
+﻿  Player.cpp
+C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\GravityGuy\Platform.h(54,28): warning C4244: 'return': conversão de 'int' para 'float', possível perda de dados
+C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\GravityGuy\Platform.h(59,27): warning C4244: 'return': conversão de 'int' para 'float', possível perda de dados
   GravityGuy.vcxproj -> C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\x64\Debug\GravityGuy.exe

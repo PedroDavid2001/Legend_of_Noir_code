@@ -29,7 +29,7 @@ Platform::Platform(float posX, float posY, uint platType, Color tint) : color(ti
                       ( platform->Width()/2.0f) * GravityGuy::totalScale,
                      ( platform->Height()/2.0f) * GravityGuy::totalScale ));
 	
-    MoveTo(( posX + ( platform->Width() / 2.0f )), posY, Layer::MIDDLE);
+    MoveTo(( posX + ( platform->Width() / 2.0f )), ( posY - ( platform->Height() / 2.0f)), Layer::MIDDLE);
 }
 
 // ---------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ void Platform::Update()
         playerDist = -playerDist;
 
     //os objetos se movem apenas se o jogador estiver proximo do centro da tela
-    if (playerDist <= 2.0f) {
+    if (playerDist <= 10.0f) {
         if (type == FLOOR) {
             
             if ( platRight > window->Width()) {
@@ -66,10 +66,10 @@ void Platform::Update()
                 GravityGuy::playerRgtVel = 0.0f;//player não se moverá
                 
                 if (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))
-                    Translate(-500.0f * gameTime, 0);
+                    Translate(-PLAYER_VELOCITY * gameTime, 0);
             }
             else {
-                GravityGuy::playerRgtVel = 200.0f;
+                GravityGuy::playerRgtVel = PLAYER_VELOCITY;
             }
 
             if ( platLeft < 0 ) {
@@ -77,22 +77,22 @@ void Platform::Update()
                 GravityGuy::playerLftVel = 0.0f;//player não se moverá
 
                 if (window->KeyDown(VK_LEFT) || window->KeyDown('A'))
-                    Translate(500.0f * gameTime, 0);
+                    Translate(PLAYER_VELOCITY * gameTime, 0);
             }
             else {
-                GravityGuy::playerLftVel = 200.0f;
+                GravityGuy::playerLftVel = PLAYER_VELOCITY;
             }
         }
         else {
             if ( GravityGuy::playerRgtVel == 0.0f && ( window->KeyDown(VK_RIGHT) || window->KeyDown('D') ))
-                Translate(-500.0f * gameTime, 0);
+                Translate(-PLAYER_VELOCITY * gameTime, 0);
             if ( GravityGuy::playerRgtVel == 0.0f && ( window->KeyDown(VK_LEFT) || window->KeyDown('A') ))
-                Translate(500.0f * gameTime, 0);
+                Translate(PLAYER_VELOCITY * gameTime, 0);
         }
     }
     else {
-        GravityGuy::playerRgtVel = 200.0f;
-        GravityGuy::playerLftVel = 200.0f;
+        GravityGuy::playerRgtVel = PLAYER_VELOCITY;
+        GravityGuy::playerLftVel = PLAYER_VELOCITY;
     }
 	
 }

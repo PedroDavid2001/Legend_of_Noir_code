@@ -19,7 +19,7 @@
 Player::Player(float scale)
 {
 	this->scale = scale;
-    tileset = new TileSet("Resources/GravityGuy.png", 32, 48, 5, 5);
+    tileset = new TileSet("Resources/GravityGuy.png", 70, 80, 5, 5);
     anim = new Animation(tileset, 0.120f, true);
 	
 	uint moving[4] = { 1,2,3,4 };
@@ -71,14 +71,17 @@ void Player::OnCollision(Object * obj)
     
     if (obj->Type() == FLOOR)
     {
+		Platform* plat = (Platform*)obj;
 		canJump = true;
 		//mantém sobre o chão
-		MoveTo(x, obj->Y() - (103 * GravityGuy::totalScale));
+		MoveTo(x, plat->Y() - ((( plat->Height() / 2.0f ) + ( this->tileset->TileHeight() / 2.0f )) * GravityGuy::totalScale));
 	}
 	else {
+
+		Platform* plat = (Platform*)obj;
 		canJump = true;
 		//mantém sobre a plataforma
-		MoveTo(x, obj->Y() - (44 * GravityGuy::totalScale));
+		MoveTo(x, obj->Y() - (((plat->Height() / 2.0f) + (this->tileset->TileHeight() / 2.0f)) * GravityGuy::totalScale));
 	}
 }
 
@@ -86,7 +89,7 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-	if (jumpTimer.Elapsed(0.4f))
+	if (jumpTimer.Elapsed(0.5f))
 		state = IDLE;
 	else {
 		canJump = false;//não pode pular novamente até finalizar o atual
@@ -123,7 +126,7 @@ void Player::Update()
 			
 			//setta estado do player
 			state = JUMP;									
-			jumpForce = 300.0f;
+			jumpForce = PLAYER_VELOCITY * 1.5f;
 
 			//inicia timer do pulo
 			jumpTimer.Start();								
@@ -133,7 +136,7 @@ void Player::Update()
 		Translate(0, -jumpForce * gameTime);
 
 		//força do pulo vai decaindo a cada iteração
-		jumpForce -= 100.0f * gameTime;						
+		jumpForce -= (PLAYER_VELOCITY / 2.0f) * gameTime;						
 
 		//se estiver pulando, e, se mover em uma direção, vai alterar apenas a posição relativa
 		if (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) {
@@ -152,7 +155,7 @@ void Player::Update()
 
     if(state != JUMP)
 		// ação da gravidade sobre o personagem não afeta durante o pulo
-		Translate(0, 300 * gameTime);
+		Translate(0, PLAYER_VELOCITY * gameTime);
         
     // atualiza animação
     anim->Select(state);

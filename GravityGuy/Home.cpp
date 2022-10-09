@@ -48,8 +48,8 @@ void Home::Update()
 
 void Home::Draw()
 {
-    backg->Draw(window->CenterX(), window->CenterY(), Layer::BACK);
-    anim->Draw(545, 275);
+    backg->Draw(window->CenterX(), window->CenterY(), Layer::BACK, GravityGuy::totalScale);
+    anim->Draw(window->CenterX() + backg->Width()/2.0f, window->CenterY() + backg->Height() / 2.0f);
 }
 
 // ------------------------------------------------------------------------------

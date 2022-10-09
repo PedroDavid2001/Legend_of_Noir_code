@@ -38,7 +38,7 @@ void GameOver::Update()
 
 void GameOver::Draw()
 {
-    title->Draw(window->CenterX(), window->CenterY(), Layer::BACK);
+    title->Draw(window->CenterX(), window->CenterY(), Layer::BACK, GravityGuy::totalScale);
 }
 
 // ----------------------------------------------------------------------

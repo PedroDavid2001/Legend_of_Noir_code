@@ -21,7 +21,7 @@ Game*   GravityGuy::level = nullptr;
 Audio*  GravityGuy::audio = nullptr;
 bool    GravityGuy::viewBBox = false;
 float   GravityGuy::playerPos = 0.0f;
-float   GravityGuy::playerLftVel = 200.0f;
+float   GravityGuy::playerLftVel = PLAYER_VELOCITY;
 float   GravityGuy::playerRgtVel = 0.0f;
 float   GravityGuy::totalScale = 1.0f;
 Player* GravityGuy::player = nullptr;
@@ -37,7 +37,7 @@ void GravityGuy::Init()
     audio->Add(TRANSITION, "Resources/Transition.wav");
 
     //escala de todas as coisas na tela
-    totalScale = window->Width() / 700.0f;
+    totalScale = window->Width() / 1280.0f;
 
     // bounding box não visível
     viewBBox = false;
@@ -94,7 +94,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     //engine->window->Mode(WINDOWED);
     //engine->window->Size(700, 500);
     engine->window->Color(30, 50, 80);
-    engine->window->Title("Gravity Guy");
+    engine->window->Title("A Night Of Thriller");
     engine->window->Icon(IDI_ICON);
     engine->window->Cursor(IDC_CURSOR);
     //engine->graphics->VSync(true);
