@@ -31,9 +31,14 @@ private:
     static Game * level;            // nível atual do jogo
 
 public:
-    static Player * player;         // jogador 
+    static Player *player;          // jogador 
+    static float playerPos;         //posição relativa do jogador
     static Audio * audio;           // sistema de áudio
     static bool viewBBox;           // estado da bounding box
+    static float totalScale;
+
+    static float playerLftVel;      //velocidade do jogador usada na esquerda
+    static float playerRgtVel;      //velocidade do jogador usada na direita
 
     void Init();                    // inicializa jogo
     void Update();                  // atualiza lógica do jogo

@@ -2,7 +2,7 @@
 // Animation (Código Fonte)
 // 
 // Criação:     28 Set 2011
-// Atualização: 08 Set 2021
+// Atualização: 06 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Classe para animar sequências em folha de sprites
@@ -27,8 +27,6 @@ Animation::Animation(TileSet * tiles, float delay, bool repeat) :
     endFrame = tileSet->Size() - 1;
 
     // configura sprite
-    sprite.scale     = 1.0f;
-    sprite.rotation  = 0.0f;
     sprite.width     = tileSet->TileWidth();
     sprite.height    = tileSet->TileHeight();
     sprite.texSize.x = float(tileSet->TileWidth())  / tileSet->Width();
@@ -135,12 +133,14 @@ void Animation::NextFrame()
 
 // ---------------------------------------------------------------------------------
 
-void Animation::Draw(uint aFrame, float x, float y, float z, Color color)
+void Animation::Draw(uint aFrame, float x, float y, float z, float scale, float rotation, Color color)
 {
     // configura dados básicos
     sprite.x = x;
     sprite.y = y;
     sprite.depth = z;
+    sprite.scale = scale;
+    sprite.rotation = rotation * XM_PI / 180.0f;
     sprite.color = color;
 
     // configura coordenadas da textura do sprite

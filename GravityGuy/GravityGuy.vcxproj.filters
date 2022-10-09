@@ -105,9 +105,6 @@
     <ClCompile Include="Level2.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\OneDrive\Documents\Game-Bomberman-Zumbi\Platformer\GridSet.cpp">
-      <Filter>Game\Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Snow.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Level2.h">
-      <Filter>Game\Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\OneDrive\Documents\Game-Bomberman-Zumbi\Platformer\GridSet.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Snow.h">

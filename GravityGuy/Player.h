@@ -19,9 +19,10 @@
 #include "Object.h"                     // interface de Object
 #include "Animation.h"                  // animação de sprites
 
+
 // ------------------------------------------------------------------------------
 
-enum Gravity {NORMAL,INVERTED};         // tipo da gravidade
+enum PlayerState { IDLE, MOVE, JUMP, ATACK, HURT };         
 
 // ---------------------------------------------------------------------------------
 
@@ -30,13 +31,18 @@ class Player : public Object
 private:
     TileSet   * tileset;                // folha de sprites do personagem
     Animation * anim;                   // animação do personagem
-    uint        gravity;                // gravidade atuando sobre o jogador
+	uint		state;
+	Timer		jumpTimer;				//timer usado para definir o tempo do pulo
+    float       jumpForce;
     int         level;                  // nível finalizado
-    
+	bool        canJump;				//verifica se o player está sobre uma plataforma para poder pular
+    float       scale;
+	
 public:
-    Player();                           // construtor
+    Player(float scale);                // construtor
     ~Player();                          // destrutor
-
+    
+    float currentPos;                   //posição atual baseada na quantidade de terreno que já foi percorrido
     void Reset();                       // volta ao estado inicial
     int Level();                        // último nível finalizado
     float Bottom();                     // coordenadas da base
@@ -60,7 +66,7 @@ inline float Player::Top()
 { return y - tileset->Height()/2; }
 
 inline void Player::Draw()
-{ anim->Draw(x, y, z); }
+{ anim->Draw(x, y, z, scale); }
 
 // ---------------------------------------------------------------------------------
 

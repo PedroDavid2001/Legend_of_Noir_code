@@ -2,7 +2,7 @@
 // Geometry (Código Fonte)
 //
 // Criação:     05 Oct 2007
-// Atualização: 25 Ago 2021
+// Atualização: 06 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Agrupa a definição de todas as formas geométricas suportadas:
@@ -21,6 +21,8 @@
 Geometry::Geometry()
 { 
     x = y = 0.0f;
+    scale = 1.0f;
+    rotation = 0.0f;
     type = UNKNOWN_T; 
 }
                                     
@@ -165,8 +167,8 @@ Circle::Circle(float r)
 
 Poly::Poly()
 {
-    vertexCount = 0;                        // polígono não tem vértices
-    vertexList  = nullptr;                    // inicialmente a lista de vértices é vazia
+    vertexCount = 0;        // polígono não tem vértices
+    vertexList  = nullptr;  // inicialmente a lista de vértices é vazia
     type = POLYGON_T;
 }
 
@@ -278,6 +280,16 @@ void Mixed::Translate(float dx, float dy)
 
     for (auto i : shapes)
         i->Translate(dx, dy);
+}
+
+// --------------------------------------------------------------------------
+
+void Mixed::Scale(float factor)
+{
+    scale = factor;
+
+    for (auto i : shapes)
+        i->Scale(factor);
 }
 
 // --------------------------------------------------------------------------

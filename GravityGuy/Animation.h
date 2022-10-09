@@ -57,26 +57,30 @@ public:
 
     void Draw(                                      // desenha o quadro atual da animação
         float x, float y, float z = Layer::MIDDLE,  // coordenadas da tela
+        float scale = 1.0f, float rotation = 0.0f,  // escala e rotação
         Color color = { 1, 1, 1, 1 });              // efeito de cor
 
     void Draw(                                      // desenha um quadro da folha de sprites    
         uint aFrame,                                // quadro da folha a desenhar
         float x, float y, float z = Layer::MIDDLE,  // coordenadas da tela
+        float scale = 1.0f, float rotation = 0.0f,  // escala e rotação
         Color color = { 1, 1, 1, 1 });              // efeito de cor
 
-    void Frame(uint aFrame);    // define o frame atual da animação
-    uint Frame();               // retorna o frame de animação ativo
-    bool Inactive();            // verifica se a animação já encerrou
-    void NextFrame();           // passa para o próximo frame da animação
-    void Restart();             // reinicia a animacão (pelo primeiro frame da seqüência)
+    void Frame(uint aFrame);                        // define o quadro atual da animação
+    uint Frame();                                   // retorna o quadro de animação ativo
+    void Delay(float delay);                        // define o tempo entre quadros
+
+    bool Inactive();                                // verifica se a animação já encerrou
+    void NextFrame();                               // passa para o próximo frame da animação
+    void Restart();                                 // reinicia a animacão (pelo primeiro frame da seqüência)
 }; 
 
 // ---------------------------------------------------------------------------------
 // funções membro inline
 
 // desenha quadro atual da animação
-inline void Animation::Draw(float x, float y, float z, Color color)
-{ sequence ? Draw(sequence[frame], x, y, z, color) : Draw(frame, x, y, z, color); }
+inline void Animation::Draw(float x, float y, float z, float scale, float rotation, Color color)
+{ sequence ? Draw(sequence[frame], x, y, z, scale, rotation, color) : Draw(frame, x, y, z, scale, rotation, color); }
 
 // define o frame atual da animação
 inline void Animation::Frame(uint aFrame)
@@ -85,6 +89,9 @@ inline void Animation::Frame(uint aFrame)
 // retorna o frame de animação ativo
 inline unsigned Animation::Frame()
 { return (sequence ? sequence[frame] : frame); }
+
+inline void Animation::Delay(float delay)
+{ animDelay = delay; }
 
 // verifica se a animação já encerrou
 inline bool Animation::Inactive()

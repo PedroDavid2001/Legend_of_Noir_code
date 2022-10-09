@@ -2,7 +2,7 @@
 // Scene (Código Fonte)
 // 
 // Criação:     16 Mar 2012
-// Atualização: 20 Ago 2021
+// Atualização: 06 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Define uma classe para gerenciar o cenário do jogo.
@@ -239,7 +239,7 @@ bool Scene::Collision(Point * p, Circle * c)
 {
     // se a distância entre o ponto e o centro do círculo
     // for menor que o raio do círculo então há colisão
-    if (p->Distance(Point(c->CenterX(), c->CenterY())) <= c->radius)
+    if (p->Distance(Point(c->CenterX(), c->CenterY())) <= c->Radius())
         return true;
     else
         return false;
@@ -303,7 +303,7 @@ bool Scene::Collision(Circle * ca, Circle * cb)
 
     // se a distância é menor que a soma dos raios
     // existe colisão entre os círculos
-    if (distance <= (ca->radius + cb->radius))
+    if (distance <= (ca->Radius() + cb->Radius()))
         return true;
 
     // nenhum colisão detectada

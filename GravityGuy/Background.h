@@ -24,11 +24,25 @@ class Background : public Object
 {
 private:
     float posC1, posC2;                         //posição horizontal das nuvens
-    
+	float posB11, posB12;							//posição horizontal dos primeiros predios
+	float posB21, posB22;							//posição horizontal dos predios do meio
+	float posB31, posB32;							//posição horizontal dos predios de tras
+	
+
     Sprite * sky;                       // fundo estático
 
     Sprite * clouds1;                   // nuvens dinamicas
-    Sprite* clouds2;    
+    Sprite * clouds2; 
+	
+	
+	Sprite * build_11; //predios mais proximos
+	Sprite * build_12;
+	
+	Sprite* build_21; //predios do meio
+	Sprite* build_22;
+
+	Sprite * build_31; //predios mais distantes
+	Sprite * build_32;
 
     Color color;                        // cor do pano de fundo
 

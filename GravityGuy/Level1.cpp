@@ -43,19 +43,28 @@ void Level1::Init()
     // adiciona jogador na cena
     scene->Add(GravityGuy::player, MOVING);
 
+	
+	Platform* plat;
+	Color white{ 1,1,1,1 };
+
+	// ----------------------
+	// CHÃO
+    // ----------------------
+
+	plat = new Platform( 0, window->Height() + 20.0f, FLOOR, white);//chão
+	scene->Add(plat, STATIC);
+    GravityGuy::playerPos = 0; //redefine a posição do jogador
+	
     // ----------------------
     // plataformas
     // ----------------------
 
-    Platform * plat;
     float posX, posY;
     uint  platType;
-    Color white { 1,1,1,1 };
-
     ifstream fin;
     fin.open("Level1.txt");
-
     fin >> posX;
+
     while (!fin.eof())
     {
         if (fin.good())

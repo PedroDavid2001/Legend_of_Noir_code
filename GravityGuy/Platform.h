@@ -17,10 +17,11 @@
 #include "Types.h"                                      // tipos específicos da engine
 #include "Object.h"                                     // interface de Object
 #include "Sprite.h"                                     // desenho de sprites
+#include "GravityGuy.h"
 
 // ---------------------------------------------------------------------------------
 
-enum PLATTYPES { SMALL, MEDIUM, LARGE, FINISH };
+enum PLATTYPES { SMALL, MEDIUM, LARGE, CHECKPOINT, FLOOR };
 
 // ---------------------------------------------------------------------------------
 
@@ -44,7 +45,7 @@ public:
 // Função Membro Inline
 
 inline void Platform::Draw()
-{ platform->Draw(x, y, z, 1.0f, 0.0f, color); }
+{ platform->Draw(x, y, z, GravityGuy::totalScale, 0.0f, color); }
 
 // ---------------------------------------------------------------------------------
 

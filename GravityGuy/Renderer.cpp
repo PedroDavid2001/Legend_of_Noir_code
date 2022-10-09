@@ -2,7 +2,7 @@
 // Renderer (Código Fonte)
 //
 // Criação:     11 Mai 2014
-// Atualização: 08 Set 2021
+// Atualização: 06 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Define um renderizador de grupos de sprites
@@ -143,7 +143,7 @@ void Renderer::BeginPixels()
 
     // limpa a textura para o próximo desenho
     // 0xff000000 = valor 32bits codificado com Alpha transparente
-    memset(videoMemory, 0xff000000, mappedTex.RowPitch * window->Height());
+    memset(videoMemory, 0xff000000, size_t(mappedTex.RowPitch) * window->Height());
 }
 
 // -----------------------------------------------------------------------------
@@ -688,7 +688,7 @@ void Renderer::Draw(Circle * circ, ulong color)
     int xpos = int(circ->CenterX());
     int ypos = int(circ->CenterY());
 
-    int r = int(circ->radius);
+    int r = int(circ->Radius());
 
     int p = 3 - (2 * r);
     int x = 0;
@@ -737,10 +737,10 @@ void Renderer::Draw(Poly * pol, ulong color)
     for (i = 0; i < pol->vertexCount - 1; ++i)
     {
         // draw line from ith to ith+1 vertex
-        x1 = pol->vertexList[i].X() + pol->X();
-        y1 = pol->vertexList[i].Y() + pol->Y();
-        x2 = pol->vertexList[i + 1].X() + pol->X();
-        y2 = pol->vertexList[i + 1].Y() + pol->Y();
+        x1 = pol->vertexList[i].X() * pol->Scale() + pol->X();
+        y1 = pol->vertexList[i].Y() * pol->Scale() + pol->Y();
+        x2 = pol->vertexList[i + 1].X() * pol->Scale() + pol->X();
+        y2 = pol->vertexList[i + 1].Y() * pol->Scale() + pol->Y();
 
         // draw a line clipping to viewport
         Line line(x1, y1, x2, y2);
@@ -749,10 +749,10 @@ void Renderer::Draw(Poly * pol, ulong color)
 
     // now close up polygon
     // draw line from first to last vertex
-    x1 = pol->vertexList[0].X() + pol->X();
-    y1 = pol->vertexList[0].Y() + pol->Y();
-    x2 = pol->vertexList[i].X() + pol->X();
-    y2 = pol->vertexList[i].Y() + pol->Y();
+    x1 = pol->vertexList[0].X() * pol->Scale() + pol->X();
+    y1 = pol->vertexList[0].Y() * pol->Scale() + pol->Y();
+    x2 = pol->vertexList[i].X() * pol->Scale() + pol->X();
+    y2 = pol->vertexList[i].Y() * pol->Scale() + pol->Y();
 
     // draw a line clipping to viewport
     Line line(x1, y1, x2, y2);
@@ -918,7 +918,7 @@ bool Renderer::Initialize(Window * window, Graphics * graphics)
 
     D3D11_SAMPLER_DESC samplerDesc;
     ZeroMemory(&samplerDesc, sizeof(samplerDesc));
-    samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+    samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
     samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
     samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
     samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -1046,7 +1046,7 @@ void Renderer::RenderBatch(ID3D11ShaderResourceView * texture, SpriteData ** spr
         graphics->context->Map(vertexBuffer, 0, mapType, 0, &mappedBuffer);
 
         // se posiciona dentro do vertex buffer
-        Vertex * vertices = (Vertex*)mappedBuffer.pData + vertexBufferPosition * VerticesPerSprite;
+        Vertex * vertices = (Vertex*)mappedBuffer.pData + size_t(vertexBufferPosition) * VerticesPerSprite;
 
         // gera posições dos vértices de cada sprite que será desenhado nesse lote
         for (uint i = 0; i < batchSize; ++i)

@@ -2,7 +2,7 @@
 // Object (Código Fonte)
 //
 // Criação:     01 Out 2007
-// Atualização: 02 Set 2021
+// Atualização: 06 Out 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Essa é a classe base para todos objetos do jogo.
@@ -27,17 +27,12 @@ float   & Object::gameTime = Engine::frameTime;     // tempo do último quadro
 
 Object::Object()
 {
-    // posição do objeto
-    posX = posY = 0.0f;
-
-    // profundidade do objeto
-    posZ = 0.5f;
-
-    //tipo do objeto
-    type = 0;
-
-    // bounding box do objeto
-    bbox = nullptr;
+    posX = posY = 0.0f;     // posição
+    posZ = 0.5f;            // profundidade
+    scaleFactor = 1.0f;     // escala
+    rotationAngle = 0.0f;   // rotação
+    type = 0;               // tipo
+    bbox = nullptr;         // bounding box
 }
 
 // -------------------------------------------------------------------------------
@@ -57,6 +52,8 @@ void Object::BBox(Geometry* bb)
 
     bbox = bb;
     bbox->Translate(x, y);
+    bbox->Rotate(rotationAngle);
+    bbox->Scale(scaleFactor);    
 }
 
 // -------------------------------------------------------------------------------
@@ -69,6 +66,45 @@ void Object::Translate(float dx, float dy, float dz)
 
     if (bbox)
         bbox->Translate(dx, dy);
+}
+
+// -------------------------------------------------------------------------------
+
+void Object::Scale(float factor)
+{
+    scaleFactor *= factor;
+
+    if (bbox)
+        bbox->Scale(factor);
+}
+
+// -------------------------------------------------------------------------------
+
+void Object::ScaleTo(float value)
+{
+    scaleFactor = value;
+    if (bbox)
+        bbox->ScaleTo(value);
+}
+
+// -------------------------------------------------------------------------------
+
+void Object::Rotate(float angle)
+{
+    rotationAngle += angle;
+
+    if (bbox)
+        bbox->Rotate(angle);
+}
+
+// -------------------------------------------------------------------------------
+
+void Object::RotateTo(float value)
+{
+    rotationAngle = value;
+
+    if (bbox)
+        bbox->RotateTo(value);
 }
 
 // -------------------------------------------------------------------------------

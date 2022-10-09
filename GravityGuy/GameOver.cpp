@@ -12,6 +12,7 @@
 #include "Engine.h"
 #include "GameOver.h"
 #include "GravityGuy.h"
+#include "Level1.h"
 #include "Home.h"
 
 // ----------------------------------------------------------------------
@@ -25,8 +26,12 @@ void GameOver::Init()
 
 void GameOver::Update()
 {
-    if (window->KeyPress(VK_ESCAPE) || window->KeyPress(VK_RETURN))
-        GravityGuy::NextLevel<Home>();
+	//espaço para definir se o jogador que sair do level ou voltar para o ultimo checkpoint
+    if (window->KeyPress(VK_RETURN))
+        GravityGuy::NextLevel<Level1>();
+	else if(window->KeyPress(VK_ESCAPE))
+		GravityGuy::NextLevel<Home>();
+
 }
 
 // ----------------------------------------------------------------------

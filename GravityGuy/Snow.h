@@ -16,6 +16,7 @@
 
 #include "Object.h"
 #include "Sprite.h"
+#include "GravityGuy.h"
 #include <random>
 using std::random_device;
 using std::mt19937;
@@ -39,7 +40,7 @@ public:
     void Draw();                   
 };
 // ------------------------------------------------------------------------------
-inline void Snow::Draw() { snow->Draw(x, y, z); }
+inline void Snow::Draw() { snow->Draw(x, y, z, GravityGuy::totalScale); }
 // ------------------------------------------------------------------------------
 
 #endif

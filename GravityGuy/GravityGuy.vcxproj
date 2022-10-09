@@ -151,7 +151,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\OneDrive\Documents\Game-Bomberman-Zumbi\Platformer\GridSet.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Background.cpp" />
@@ -180,7 +179,6 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\OneDrive\Documents\Game-Bomberman-Zumbi\Platformer\GridSet.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Background.h" />

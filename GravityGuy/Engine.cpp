@@ -2,7 +2,7 @@
 // Engine (Código Fonte)
 //
 // Criação:     15 Mai 2014
-// Atualização: 30 Set 2021
+// Atualização: 27 Set 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   A função da Engine é rodar jogos criados a partir da classe

@@ -18,9 +18,13 @@
 
 // inicializa membros estáticos da classe
 Game*   GravityGuy::level = nullptr;
-Player* GravityGuy::player = nullptr;
 Audio*  GravityGuy::audio = nullptr;
 bool    GravityGuy::viewBBox = false;
+float   GravityGuy::playerPos = 0.0f;
+float   GravityGuy::playerLftVel = 200.0f;
+float   GravityGuy::playerRgtVel = 0.0f;
+float   GravityGuy::totalScale = 1.0f;
+Player* GravityGuy::player = nullptr;
 
 // ------------------------------------------------------------------------------
 
@@ -32,11 +36,14 @@ void GravityGuy::Init()
     audio->Add(MUSIC, "Resources/Music.wav");
     audio->Add(TRANSITION, "Resources/Transition.wav");
 
+    //escala de todas as coisas na tela
+    totalScale = window->Width() / 700.0f;
+
     // bounding box não visível
     viewBBox = false;
 
     // cria jogador
-    player = new Player();
+    player = new Player(this->totalScale);
 
     // inicializa nível de abertura do jogo
     level = new Home();
@@ -84,8 +91,8 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     Engine * engine = new Engine();
 
     // configura o motor
-    engine->window->Mode(WINDOWED);
-    engine->window->Size(700, 500);
+    //engine->window->Mode(WINDOWED);
+    //engine->window->Size(700, 500);
     engine->window->Color(30, 50, 80);
     engine->window->Title("Gravity Guy");
     engine->window->Icon(IDI_ICON);

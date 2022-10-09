@@ -10,30 +10,35 @@
 **********************************************************************************/
 
 #include "Player.h"
-#include "GravityGuy.h"
 #include "Platform.h"
+#include "Timer.h"
+#include "GravityGuy.h"
 
 // ---------------------------------------------------------------------------------
 
-Player::Player()
+Player::Player(float scale)
 {
-    tileset = new TileSet("Resources/sprite.png", 65, 134, 7, 7);
+	this->scale = scale;
+    tileset = new TileSet("Resources/GravityGuy.png", 32, 48, 5, 5);
     anim = new Animation(tileset, 0.120f, true);
+	
+	uint moving[4] = { 1,2,3,4 };
+	uint jump[1] = { 0 };
+	uint idle[1] = { 0 };
 
-
-    uint stoped[7] = { 0,1,2,3,4,5,6 };
-
-    anim->Add(0, stoped, 7);
+	anim->Add(MOVE, moving, 4);
+	anim->Add(IDLE, idle, 1);
+	anim->Add(JUMP, jump, 1);
 
     // cria bounding box
     BBox(new Rect(
-        -1.0f * tileset->TileWidth() / 2.0f,
-        -1.0f * tileset->TileHeight() / 2.0f,
-        tileset->TileWidth() / 2.0f,
-        tileset->TileHeight() / 2.0f));
+			( - 1.0f * tileset->TileWidth() / 2.0f) * GravityGuy::totalScale,
+			( -1.0f * tileset->TileHeight() / 2.0f) * GravityGuy::totalScale,
+			( tileset->TileWidth() / 2.0f)          * GravityGuy::totalScale,
+			( tileset->TileHeight() / 2.0f)         * GravityGuy::totalScale ));
     
     // inicializa estado do player
-    gravity = NORMAL;  
+	state = IDLE;
     level = 0;
 
     // posição inicial
@@ -54,7 +59,7 @@ void Player::Reset()
 {
     // volta ao estado inicial
     MoveTo(window->CenterX(), 24.0f, Layer::MIDDLE);
-    gravity = NORMAL;
+    state = IDLE;
     level = 0;
 }
 
@@ -63,56 +68,98 @@ void Player::Reset()
 
 void Player::OnCollision(Object * obj)
 {
-    if (obj->Type() == FINISH)
+    
+    if (obj->Type() == FLOOR)
     {
-        // chegou ao final do nível
-        level++;
-    }
-    else
-    {
-        // mantém personagem em cima da plataforma
-        if (gravity == NORMAL)
-            MoveTo(window->CenterX(), obj->Y() - 65);
-        else
-            MoveTo(window->CenterX(), obj->Y() + 65);
-    }
-
-    // ----------------------------------------------------------
-    // Processa teclas pressionadas
-    // ----------------------------------------------------------
-    // jogador só pode alterar a gravidade enquanto estiver
-    // em cima de uma plataforma, não é possível a mudança no ar
-    // ----------------------------------------------------------
-
-    if (window->KeyPress(VK_SPACE))
-    {
-        gravity = !gravity;
-
-        // toca efeito sonoro
-        GravityGuy::audio->Play(TRANSITION);
-
-        // tira player da plataforma para evitar 
-        // detecção de colisão no quadro seguinte
-        if (gravity == NORMAL)
-            Translate(0, 12);
-        else
-            Translate(0 , -12);
-    }
+		canJump = true;
+		//mantém sobre o chão
+		MoveTo(x, obj->Y() - (103 * GravityGuy::totalScale));
+	}
+	else {
+		canJump = true;
+		//mantém sobre a plataforma
+		MoveTo(x, obj->Y() - (44 * GravityGuy::totalScale));
+	}
 }
 
 // ---------------------------------------------------------------------------------
 
 void Player::Update()
 {
-    // ação da gravidade sobre o personagem
-    if (gravity == NORMAL)    
-        Translate(0, 300 * gameTime);
-    else
-        Translate(0, -300 * gameTime);
+	if (jumpTimer.Elapsed(0.4f))
+		state = IDLE;
+	else {
+		canJump = false;//não pode pular novamente até finalizar o atual
+	}
 
+	// ----------------------------------------------------------
+	// Processa teclas pressionadas
+	// ----------------------------------------------------------
+
+	if (state != JUMP) {
+		if (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) {
+			
+			//impede o jogador de atravessar a tela
+			if (x + ((tileset->TileWidth() * GravityGuy::totalScale) / 2.0f) < window->Width())
+				Translate( GravityGuy::playerRgtVel * gameTime, 0 );
+
+			state = MOVE;
+
+		}
+		else if (window->KeyDown(VK_LEFT) || window->KeyDown('A')) {
+			
+			//impede o jogador de atravessar a tela
+			if (x - ((tileset->TileWidth() * GravityGuy::totalScale) / 2.0f) > 0)
+				Translate( -GravityGuy::playerLftVel * gameTime, 0 );
+			
+			state = MOVE;
+		}
+		else {
+			state = IDLE;
+		}
+
+		//independente do estado, se o jogador apertar espaço, o boneco deve pular!!
+		if (window->KeyPress(VK_SPACE) && canJump) {
+			
+			//setta estado do player
+			state = JUMP;									
+			jumpForce = 300.0f;
+
+			//inicia timer do pulo
+			jumpTimer.Start();								
+		}
+	}
+	else if (state == JUMP) {
+		Translate(0, -jumpForce * gameTime);
+
+		//força do pulo vai decaindo a cada iteração
+		jumpForce -= 100.0f * gameTime;						
+
+		//se estiver pulando, e, se mover em uma direção, vai alterar apenas a posição relativa
+		if (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) {
+
+			//impede o jogador de atravessar a tela
+			if (x + ((tileset->TileWidth() * GravityGuy::totalScale) / 2.0f) < window->Width())
+				Translate(GravityGuy::playerRgtVel * gameTime, 0);
+		}
+		else if (window->KeyDown(VK_LEFT) || window->KeyDown('A')) {
+			
+			//impede o jogador de atravessar a tela
+			if (x - ((tileset->TileWidth() * GravityGuy::totalScale) / 2.0f) > 0)
+				Translate(-GravityGuy::playerLftVel * gameTime, 0);
+		}
+	}
+
+    if(state != JUMP)
+		// ação da gravidade sobre o personagem não afeta durante o pulo
+		Translate(0, 300 * gameTime);
+        
     // atualiza animação
-    anim->Select(gravity);
+    anim->Select(state);
     anim->NextFrame();
 }
+
+// ---------------------------------------------------------------------------------
+
 
 // ---------------------------------------------------------------------------------
