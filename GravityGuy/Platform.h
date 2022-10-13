@@ -18,10 +18,24 @@
 #include "Object.h"                                     // interface de Object
 #include "Sprite.h"                                     // desenho de sprites
 #include "GravityGuy.h"
+#include <random>
+using namespace std;
 
 // ---------------------------------------------------------------------------------
 
-enum PLATTYPES { SMALL, MEDIUM, LARGE, CHECKPOINT, FLOOR };
+enum PLATTYPES { 
+    FLOOR_2560X150,
+    FLOOR_2560X300,
+    PLAT_150X50_FIXED, 
+    PLAT_150X50_MOBILE_H,                               //move horizontalmente
+    PLAT_150X50_MOBILE_V,                               //move verticalmente
+    PLAT_200X100, 
+    FLOOR_1280X300, 
+    PLAT_400X100, 
+    PLAT_600X300, 
+    PLAT_400X150, 
+    PLAT_400X400
+};
 
 // ---------------------------------------------------------------------------------
 
@@ -30,6 +44,13 @@ class Platform : public Object
 private:
     Sprite * platform = nullptr;            // sprite da plataforma
     Color color;                            // cor da plataforma
+    float xOrigin, yOrigin;                 // posições de origem das plataformas móveis (são alteradas quando o player se move)
+    float direcao = 1.0f;                   //direção do movimento (inverte quando a plataforma alcança um limite)
+    float velocity;                         //velocidade alterada da plataforma para diferenciar o movimento
+    random_device rd;
+    mt19937 mt{ rd() };
+
+    uniform_real_distribution<float> altVel {1.0f, 1.5f}; //alterador da velocidade da plataforma
 
 public:
     Platform(float posX, float posY, 
@@ -41,6 +62,10 @@ public:
     void Draw();                            // desenho do objeto
     float Height();
     float Width();
+    float Bottom();
+    float Top();
+    float Left();
+    float Right();
 }; 
 
 // ---------------------------------------------------------------------------------
@@ -51,12 +76,32 @@ inline void Platform::Draw()
 
 inline float Platform::Height() 
 {
-    return platform->Height();
+    return platform->Height() * GravityGuy::totalScale;
 }
 
 inline float Platform::Width()
 {
-    return platform->Width();
+    return platform->Width() * GravityGuy::totalScale;
+}
+
+inline float Platform::Bottom()
+{
+    return y + ( platform->Height() / 2.0f );
+}
+
+inline float Platform::Top()
+{
+    return y - ( platform->Height() / 2.0f );
+}
+
+inline float Platform::Right()
+{
+    return x + ( platform->Width() / 2.0f );
+}
+
+inline float Platform::Left()
+{
+    return x - ( platform->Width() / 2.0f );
 }
 
 // ---------------------------------------------------------------------------------

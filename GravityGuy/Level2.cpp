@@ -91,7 +91,7 @@ void Level2::Update()
         GravityGuy::NextLevel<Home>();
         GravityGuy::player->Reset();
     }
-    else if (GravityGuy::player->Bottom() < 0 || GravityGuy::player->Top() > window->Height())
+    else if ( GravityGuy::player->Top() > window->Height() )
     {
         GravityGuy::audio->Stop(MUSIC);
         GravityGuy::NextLevel<GameOver>();

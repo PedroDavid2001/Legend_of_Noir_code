@@ -19,7 +19,6 @@
 #include "Object.h"                     // interface de Object
 #include "Animation.h"                  // animação de sprites
 
-
 // ------------------------------------------------------------------------------
 
 enum PlayerState { IDLE, MOVE, JUMP, ATACK, HURT };         
@@ -36,6 +35,7 @@ private:
     float       jumpForce;
     int         level;                  // nível finalizado
 	bool        canJump;				//verifica se o player está sobre uma plataforma para poder pular
+    bool        falling;                //verifica se existe algo abaixo do player
     float       scale;
 	
 public:
@@ -47,6 +47,10 @@ public:
     int Level();                        // último nível finalizado
     float Bottom();                     // coordenadas da base
     float Top();                        // coordenadas do topo
+    float Right();
+    float Left();
+    float Width();
+    float Height();
 
     void OnCollision(Object * obj);     // resolução da colisão
     void Update();                      // atualização do objeto
@@ -59,11 +63,35 @@ public:
 inline int Player::Level()
 { return level; }
 
+inline float Player::Height()
+{
+    return tileset->TileHeight() * scale;
+}
+
+inline float Player::Width()
+{
+    return tileset->TileWidth() * scale;
+}
+
 inline float Player::Bottom()
-{ return y + tileset->Height()/2; }
+{ 
+    return y + ( tileset->TileHeight() / 2.0f );
+}
 
 inline float Player::Top()
-{ return y - tileset->Height()/2; }
+{ 
+    return y - ( tileset->TileHeight() / 2.0f );
+}
+
+inline float Player::Right()
+{
+    return x + ( tileset->TileWidth() / 2.0f );
+}
+
+inline float Player::Left()
+{
+    return x - ( tileset->TileWidth() / 2.0f );
+}
 
 inline void Player::Draw()
 { anim->Draw(x, y, z, scale); }

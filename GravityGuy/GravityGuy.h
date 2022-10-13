@@ -18,7 +18,8 @@
 #include "Audio.h"
 #include "Player.h"
 #include "Resources.h"
-#define PLAYER_VELOCITY 500.0f
+#define PLAYER_VELOCITY 400.0f
+#define PLATFORM_VELOCITY 200.0f
 
 // ------------------------------------------------------------------------------
 

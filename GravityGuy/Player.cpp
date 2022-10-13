@@ -31,18 +31,21 @@ Player::Player(float scale)
 	anim->Add(JUMP, jump, 1);
 
     // cria bounding box
-    BBox(new Rect(
-			( - 1.0f * tileset->TileWidth() / 2.0f) * GravityGuy::totalScale,
-			( -1.0f * tileset->TileHeight() / 2.0f) * GravityGuy::totalScale,
-			( tileset->TileWidth() / 2.0f)          * GravityGuy::totalScale,
-			( tileset->TileHeight() / 2.0f)         * GravityGuy::totalScale ));
+    BBox( new Rect(
+		-1.0f * this->Width() / 2.0f,
+		-1.0f * this->Height() / 2.0f,
+		this->Width() / 2.0f,
+		this->Height() / 2.0f
+	));
     
     // inicializa estado do player
 	state = IDLE;
     level = 0;
+	falling = false;
+	canJump = true;
 
     // posição inicial
-    MoveTo(window->CenterX(), 24.0f, Layer::MIDDLE);
+    MoveTo(window->CenterX(), ( 570.0f * scale ) - ( this->Height() / 2.0f ), Layer::MIDDLE);
 }
 
 // ---------------------------------------------------------------------------------
@@ -57,8 +60,8 @@ Player::~Player()
 
 void Player::Reset()
 {
-    // volta ao estado inicial
-    MoveTo(window->CenterX(), 24.0f, Layer::MIDDLE);
+    // volta ao estado inicial 
+	MoveTo(window->CenterX(), (570.0f * scale) - (this->Height() / 2.0f), Layer::MIDDLE);
     state = IDLE;
     level = 0;
 }
@@ -68,20 +71,28 @@ void Player::Reset()
 
 void Player::OnCollision(Object * obj)
 {
-    
-    if (obj->Type() == FLOOR)
-    {
-		Platform* plat = (Platform*)obj;
-		canJump = true;
-		//mantém sobre o chão
-		MoveTo(x, plat->Y() - ((( plat->Height() / 2.0f ) + ( this->tileset->TileHeight() / 2.0f )) * GravityGuy::totalScale));
-	}
-	else {
+	Platform* plat = (Platform*)obj;
+	
+	canJump = true;
+	
+	float botDiff = this->Bottom() - plat->Top();
+	float rgtDiff = this->Right() - plat->Left();
+	float lftDiff = this->Left() - plat->Right();
 
-		Platform* plat = (Platform*)obj;
-		canJump = true;
-		//mantém sobre a plataforma
-		MoveTo(x, obj->Y() - (((plat->Height() / 2.0f) + (this->tileset->TileHeight() / 2.0f)) * GravityGuy::totalScale));
+	if (rgtDiff < 0)
+		rgtDiff = -rgtDiff;
+	if (botDiff < 0)
+		botDiff = -botDiff;
+	if (lftDiff < 0)
+		lftDiff = -lftDiff;
+
+
+	if (plat->Type() != 11) {
+		//está sobre a plataforma
+		if (this->Left() >= plat->Left() && this->Right() <= plat->Right()) {
+			falling = false;
+			MoveTo(x, (plat->Top() - (this->Height() )) - 1.0f);
+		}
 	}
 }
 
@@ -89,8 +100,9 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-	if (jumpTimer.Elapsed(0.5f))
+	if (jumpTimer.Elapsed(0.6f)){
 		state = IDLE;
+	}
 	else {
 		canJump = false;//não pode pular novamente até finalizar o atual
 	}
@@ -103,7 +115,7 @@ void Player::Update()
 		if (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) {
 			
 			//impede o jogador de atravessar a tela
-			if (x + ((tileset->TileWidth() * GravityGuy::totalScale) / 2.0f) < window->Width())
+			if (this->Right() < window->Width())
 				Translate( GravityGuy::playerRgtVel * gameTime, 0 );
 
 			state = MOVE;
@@ -112,7 +124,7 @@ void Player::Update()
 		else if (window->KeyDown(VK_LEFT) || window->KeyDown('A')) {
 			
 			//impede o jogador de atravessar a tela
-			if (x - ((tileset->TileWidth() * GravityGuy::totalScale) / 2.0f) > 0)
+			if (this->Left() > 0)
 				Translate( -GravityGuy::playerLftVel * gameTime, 0 );
 			
 			state = MOVE;
@@ -126,14 +138,15 @@ void Player::Update()
 			
 			//setta estado do player
 			state = JUMP;									
-			jumpForce = PLAYER_VELOCITY * 1.5f;
-
+			jumpForce = PLAYER_VELOCITY * 2.0f;
+			
 			//inicia timer do pulo
 			jumpTimer.Start();								
 		}
 	}
 	else if (state == JUMP) {
 		Translate(0, -jumpForce * gameTime);
+		falling = true; //pode cair, quando terminar o pulo
 
 		//força do pulo vai decaindo a cada iteração
 		jumpForce -= (PLAYER_VELOCITY / 2.0f) * gameTime;						
@@ -142,21 +155,21 @@ void Player::Update()
 		if (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) {
 
 			//impede o jogador de atravessar a tela
-			if (x + ((tileset->TileWidth() * GravityGuy::totalScale) / 2.0f) < window->Width())
+			if (this->Right() < window->Width())
 				Translate(GravityGuy::playerRgtVel * gameTime, 0);
 		}
 		else if (window->KeyDown(VK_LEFT) || window->KeyDown('A')) {
 			
 			//impede o jogador de atravessar a tela
-			if (x - ((tileset->TileWidth() * GravityGuy::totalScale) / 2.0f) > 0)
+			if (this->Left() > 0)
 				Translate(-GravityGuy::playerLftVel * gameTime, 0);
 		}
 	}
 
-    if(state != JUMP)
+    if(state != JUMP && falling)
 		// ação da gravidade sobre o personagem não afeta durante o pulo
-		Translate(0, PLAYER_VELOCITY * gameTime);
-        
+		Translate(0, PLAYER_VELOCITY * 2.0f * gameTime);
+       
     // atualiza animação
     anim->Select(state);
     anim->NextFrame();

@@ -51,7 +51,7 @@ void Level1::Init()
 	// CHÃO
     // ----------------------
 
-	plat = new Platform( 0, window->Height() + 20.0f, FLOOR, white);//chão
+	plat = new Platform( 6292.5f, window->Height() + 20.0f, 11, white);//chão
 	scene->Add(plat, STATIC);
     GravityGuy::playerPos = 0; //redefine a posição do jogador
 	
@@ -110,7 +110,7 @@ void Level1::Update()
         GravityGuy::NextLevel<Home>();
         GravityGuy::player->Reset();
     }
-    else if (GravityGuy::player->Bottom() < 0 || GravityGuy::player->Top() > window->Height())
+    else if ( GravityGuy::player->Top() > window->Height() )
     {
         GravityGuy::audio->Stop(MUSIC);
         GravityGuy::NextLevel<GameOver>();
