@@ -30,15 +30,20 @@ class Player : public Object
 private:
     TileSet   * tileset;                // folha de sprites do personagem
     Animation * anim;                   // animação do personagem
-	uint		state;
-	Timer		jumpTimer;				//timer usado para definir o tempo do pulo
+    Timer		jumpTimer;				//timer usado para definir o tempo do pulo
+    Timer       shootTimer;
     float       jumpForce;
-    int         level;                  // nível finalizado
 	bool        canJump;				//verifica se o player está sobre uma plataforma para poder pular
     bool        falling;                //verifica se existe algo abaixo do player
+    bool        direction;              //left = false; right = true
     float       scale;
 	
 public:
+    uint        hp;
+    uint		state;
+    bool        left;                   //verifica se pode ir para esquerda
+    bool        right;                  //verifica se pode ir para direita
+
     Player(float scale);                // construtor
     ~Player();                          // destrutor
     
@@ -60,9 +65,6 @@ public:
 // ---------------------------------------------------------------------------------
 // Função Membro Inline
 
-inline int Player::Level()
-{ return level; }
-
 inline float Player::Height()
 {
     return tileset->TileHeight() * scale;
@@ -75,22 +77,22 @@ inline float Player::Width()
 
 inline float Player::Bottom()
 { 
-    return y + ( tileset->TileHeight() / 2.0f );
+    return y + ( this->Height() / 2.0f);
 }
 
 inline float Player::Top()
 { 
-    return y - ( tileset->TileHeight() / 2.0f );
+    return y - (this->Height() / 2.0f );
 }
 
 inline float Player::Right()
 {
-    return x + ( tileset->TileWidth() / 2.0f );
+    return x + ( this->Width() / 2.0f );
 }
 
 inline float Player::Left()
 {
-    return x - ( tileset->TileWidth() / 2.0f );
+    return x - (this->Width() / 2.0f );
 }
 
 inline void Player::Draw()

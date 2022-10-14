@@ -1,9 +1,9 @@
-﻿  compilation object save succeeded; see C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\GravityGuy\Shaders\Pixel.cso
-  compilation object save succeeded; see C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\GravityGuy\Shaders\Vertex.cso
-  GridSet.cpp
+﻿  compilation object save succeeded; see C:\Users\User\Downloads\Game_Unidade_2-main\Game_Unidade_2-main\GravityGuy\Shaders\Pixel.cso
+  compilation object save succeeded; see C:\Users\User\Downloads\Game_Unidade_2-main\Game_Unidade_2-main\GravityGuy\Shaders\Vertex.cso
   Animation.cpp
   Audio.cpp
   Background.cpp
+  Bullet.cpp
   Engine.cpp
   Font.cpp
   Game.cpp
@@ -14,14 +14,13 @@
   Home.cpp
   Image.cpp
   Level1.cpp
-C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\GravityGuy\Level1.cpp(54,43): warning C4244: 'argumento': conversão de 'int' para 'float', possível perda de dados
   Level2.cpp
   Object.cpp
   Platform.cpp
   Player.cpp
   Renderer.cpp
   Scene.cpp
-  Compilando...
+  Compiling...
   Snow.cpp
   Sound.cpp
   Sprite.cpp
@@ -29,5 +28,5 @@ C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\GravityGuy\Level1.cpp(54,43): w
   TileSet.cpp
   Timer.cpp
   Window.cpp
-GridSet.obj : error LNK2001: símbolo externo não resolvido "public: void __cdecl Animation::Draw(unsigned int,float,float,float,struct Color)" (?Draw@Animation@@QEAAXIMMMUColor@@@Z)
-C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\x64\Release\GravityGuy.exe : fatal error LNK1120: 1 externo não resolvidos
+Level1.obj : error LNK2001: unresolved external symbol "public: int __cdecl Player::Level(void)" (?Level@Player@@QEAAHXZ)
+C:\Users\User\Downloads\Game_Unidade_2-main\Game_Unidade_2-main\x64\Release\GravityGuy.exe : fatal error LNK1120: 1 unresolved externals

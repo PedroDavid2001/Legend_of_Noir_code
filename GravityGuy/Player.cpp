@@ -13,12 +13,17 @@
 #include "Platform.h"
 #include "Timer.h"
 #include "GravityGuy.h"
+#include "Level1.h"
+#include "BossLVL1.h"
+#include "Bullet.h"
 
 // ---------------------------------------------------------------------------------
 
 Player::Player(float scale)
 {
 	this->scale = scale;
+	type = PLAYER;
+	hp = 4;
     tileset = new TileSet("Resources/GravityGuy.png", 70, 80, 5, 5);
     anim = new Animation(tileset, 0.120f, true);
 	
@@ -28,6 +33,7 @@ Player::Player(float scale)
 
 	anim->Add(MOVE, moving, 4);
 	anim->Add(IDLE, idle, 1);
+	anim->Add(ATACK, idle, 1);
 	anim->Add(JUMP, jump, 1);
 
     // cria bounding box
@@ -40,12 +46,15 @@ Player::Player(float scale)
     
     // inicializa estado do player
 	state = IDLE;
-    level = 0;
 	falling = false;
+	left = false;
+	right = false;
 	canJump = true;
+	direction = true;	//começa virado para direita
+	shootTimer.Start();
 
     // posição inicial
-    MoveTo(window->CenterX(), ( 570.0f * scale ) - ( this->Height() / 2.0f ), Layer::MIDDLE);
+    MoveTo( 200.0f * scale, ( 560.0f * scale ) - ( this->Height() / 2.0f ), Layer::MIDDLE);
 }
 
 // ---------------------------------------------------------------------------------
@@ -61,9 +70,14 @@ Player::~Player()
 void Player::Reset()
 {
     // volta ao estado inicial 
-	MoveTo(window->CenterX(), (570.0f * scale) - (this->Height() / 2.0f), Layer::MIDDLE);
-    state = IDLE;
-    level = 0;
+	MoveTo( 200.0f * scale, (560.0f * scale) - (this->Height() / 2.0f), Layer::MIDDLE);
+	state = IDLE;
+	falling = false;
+	left = false;
+	right = false;
+	canJump = true;
+	direction = true;	//começa virado para direita
+	shootTimer.Start();
 }
 
 
@@ -71,27 +85,41 @@ void Player::Reset()
 
 void Player::OnCollision(Object * obj)
 {
-	Platform* plat = (Platform*)obj;
-	
-	canJump = true;
-	
-	float botDiff = this->Bottom() - plat->Top();
-	float rgtDiff = this->Right() - plat->Left();
-	float lftDiff = this->Left() - plat->Right();
+	if (obj->type == PLATFORM) {
+		Platform* plat = (Platform*)obj;
 
-	if (rgtDiff < 0)
-		rgtDiff = -rgtDiff;
-	if (botDiff < 0)
-		botDiff = -botDiff;
-	if (lftDiff < 0)
-		lftDiff = -lftDiff;
+		canJump = true;
+
+		float botDiff = this->Bottom() - plat->Top();
+		float rgtDiff = this->Right() - plat->Left();
+		float lftDiff = this->Left() - plat->Right();
+
+		if (rgtDiff < 0)
+			rgtDiff = -rgtDiff;
+		if (botDiff < 0)
+			botDiff = -botDiff;
+		if (lftDiff < 0)
+			lftDiff = -lftDiff;
 
 
-	if (plat->Type() != 11) {
-		//está sobre a plataforma
-		if (this->Left() >= plat->Left() && this->Right() <= plat->Right()) {
-			falling = false;
-			MoveTo(x, (plat->Top() - (this->Height() )) - 1.0f);
+		if (plat->Type() != 11) {
+
+			//right
+			if (this->Right() >= plat->Left() && this->Left() < plat->Left() && botDiff > 30.0f * scale) {
+				MoveTo((plat->Left() - this->Width() / 2.0f), y);
+				right = false;
+			}
+			//left
+			else if (this->Left() <= plat->Right() && this->Right() > plat->Right() && botDiff > 30.0f * scale) {
+				MoveTo((plat->Right() + this->Width() / 2.0f), y);
+				left = false;
+			}
+			//down
+			else if (rgtDiff > 10.0f * scale && lftDiff > 10.0f * scale && botDiff <= 10.0f * scale) {
+				if (state != JUMP)
+					MoveTo(x, plat->Top() - (this->Height() / 2.0f));
+				falling = false;
+			}
 		}
 	}
 }
@@ -100,19 +128,21 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-	if (jumpTimer.Elapsed(0.6f)){
+	if (jumpTimer.Elapsed(0.4f)){
 		state = IDLE;
 	}
 	else {
 		canJump = false;//não pode pular novamente até finalizar o atual
 	}
-
+	
 	// ----------------------------------------------------------
 	// Processa teclas pressionadas
 	// ----------------------------------------------------------
 
 	if (state != JUMP) {
-		if (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) {
+		if (right && (window->KeyDown(VK_RIGHT) || window->KeyDown('D' ))) {
+			
+			direction = true;
 			
 			//impede o jogador de atravessar a tela
 			if (this->Right() < window->Width())
@@ -121,8 +151,10 @@ void Player::Update()
 			state = MOVE;
 
 		}
-		else if (window->KeyDown(VK_LEFT) || window->KeyDown('A')) {
+		else if (left && (window->KeyDown(VK_LEFT) || window->KeyDown('A' ))) {
 			
+			direction = false;
+
 			//impede o jogador de atravessar a tela
 			if (this->Left() > 0)
 				Translate( -GravityGuy::playerLftVel * gameTime, 0 );
@@ -143,6 +175,25 @@ void Player::Update()
 			//inicia timer do pulo
 			jumpTimer.Start();								
 		}
+
+		//detecção de disparo
+		if ((window->KeyDown('Z') || window->KeyDown('K')) && shootTimer.Elapsed(0.5f)) {
+			state = ATACK;
+			shootTimer.Start();
+			
+			Bullet* bullet = nullptr;
+
+			if (direction)
+				bullet = new Bullet(true, this->scale);
+			else
+				bullet = new Bullet(false, this->scale);
+
+			//verifica qual o level atual para decidir qual irá receber o objeto bullet
+			if (GravityGuy::currentLvl == LEVEL_1 && bullet != nullptr)
+				Level1::scene->Add(bullet, MOVING);
+			else if (GravityGuy::currentLvl == BOSS_1 && bullet != nullptr)
+				BossLVL1::scene->Add(bullet, MOVING);
+		}
 	}
 	else if (state == JUMP) {
 		Translate(0, -jumpForce * gameTime);
@@ -152,24 +203,50 @@ void Player::Update()
 		jumpForce -= (PLAYER_VELOCITY / 2.0f) * gameTime;						
 
 		//se estiver pulando, e, se mover em uma direção, vai alterar apenas a posição relativa
-		if (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) {
-
+		if (right && (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))) {
+			
+			direction = true;
+			
 			//impede o jogador de atravessar a tela
 			if (this->Right() < window->Width())
 				Translate(GravityGuy::playerRgtVel * gameTime, 0);
 		}
-		else if (window->KeyDown(VK_LEFT) || window->KeyDown('A')) {
+		else if (left && (window->KeyDown(VK_LEFT) || window->KeyDown('A'))) {
 			
+			direction = false;
+
 			//impede o jogador de atravessar a tela
 			if (this->Left() > 0)
 				Translate(-GravityGuy::playerLftVel * gameTime, 0);
+		}
+
+		//detecção de disparo
+		if ((window->KeyDown('Z') || window->KeyDown('K')) && shootTimer.Elapsed(0.5f)) {
+			shootTimer.Start();
+
+			Bullet* bullet = nullptr;
+
+			if (direction)
+				bullet = new Bullet(true, this->scale);
+			else
+				bullet = new Bullet(false, this->scale);
+
+			//verifica qual o level atual para decidir qual irá receber o objeto bullet
+			if (GravityGuy::currentLvl == LEVEL_1 && bullet != nullptr)
+				Level1::scene->Add(bullet, MOVING);
+			else if (GravityGuy::currentLvl == BOSS_1 && bullet != nullptr)
+				BossLVL1::scene->Add(bullet, MOVING);
 		}
 	}
 
     if(state != JUMP && falling)
 		// ação da gravidade sobre o personagem não afeta durante o pulo
 		Translate(0, PLAYER_VELOCITY * 2.0f * gameTime);
-       
+	
+	falling = true;
+	right = true;
+	left = true;
+
     // atualiza animação
     anim->Select(state);
     anim->NextFrame();

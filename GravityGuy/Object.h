@@ -24,7 +24,8 @@
 #include "Geometry.h"           // todo objeto deve ter uma bounding box
 
 // -----------------------------------------------------------------------------
-
+enum Type{ BULLET, PLAYER, BOSS, PLATFORM};
+// -----------------------------------------------------------------------------
 class Object
 {
 private:
@@ -48,9 +49,9 @@ protected:
     // valor da rotação do objeto
     const float & rotation = rotationAngle; 
 
+public:
     uint type;                  // tipo do objeto
 
-public:
     Object();                   // construtor
     virtual ~Object();          // destrutor virtual
 

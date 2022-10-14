@@ -24,6 +24,7 @@
 // ------------------------------------------------------------------------------
 
 enum Sounds {MENU, MUSIC, TRANSITION};
+enum CurrentLevel { LEVEL_1, BOSS_1 };
 
 // ------------------------------------------------------------------------------
 
@@ -34,6 +35,7 @@ private:
 
 public:
     static Player *player;          // jogador 
+    static uint currentLvl;         //inteiro que indica qual o level atual
     static float playerPos;         //posição relativa do jogador
     static Audio * audio;           // sistema de áudio
     static bool viewBBox;           // estado da bounding box

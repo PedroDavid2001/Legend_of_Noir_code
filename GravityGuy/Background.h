@@ -23,11 +23,11 @@
 class Background : public Object
 {
 private:
-    float posC1, posC2;                         //posição horizontal das nuvens
+    float posC1, posC2;								//posição horizontal das nuvens
 	float posB11, posB12;							//posição horizontal dos primeiros predios
 	float posB21, posB22;							//posição horizontal dos predios do meio
 	float posB31, posB32;							//posição horizontal dos predios de tras
-	
+	uint  moving;									//verifica se player está se movendo
 
     Sprite * sky;                       // fundo estático
 

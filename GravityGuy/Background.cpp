@@ -54,13 +54,15 @@ Background::~Background()
 
 void Background::Update()
 {
+	moving = GravityGuy::player->state;//IDLE = 0
+
 	float playerDist = GravityGuy::player->X() - window->CenterX();
 
 	if (playerDist < 0)
 		playerDist = -playerDist;
 
-	if (playerDist <= 10.0f) {
-		if (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) {
+	if (playerDist <= 2.0f) {
+		if (moving && (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))) {
 			// move as nuvens quando estiver andando
 			posC1  -= (PLAYER_VELOCITY / 4.0f) * gameTime;
 			posC2  -= (PLAYER_VELOCITY / 4.0f) * gameTime;
@@ -71,7 +73,7 @@ void Background::Update()
 			posB31 -= (PLAYER_VELOCITY / 4.0f) * gameTime;
 			posB32 -= (PLAYER_VELOCITY / 4.0f) * gameTime;
 		}
-		else if (window->KeyDown(VK_LEFT) || window->KeyDown('A')) {
+		else if (moving && (window->KeyDown(VK_LEFT) || window->KeyDown('A'))) {
 			// move as nuvens quando estiver andando
 			posC1  += (PLAYER_VELOCITY / 4.0f) * gameTime;
 			posC2  += (PLAYER_VELOCITY / 4.0f) * gameTime;

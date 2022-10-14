@@ -24,6 +24,7 @@ float   GravityGuy::playerPos = 0.0f;
 float   GravityGuy::playerLftVel = PLAYER_VELOCITY;
 float   GravityGuy::playerRgtVel = 0.0f;
 float   GravityGuy::totalScale = 1.0f;
+uint    GravityGuy::currentLvl = 0;
 Player* GravityGuy::player = nullptr;
 
 // ------------------------------------------------------------------------------
@@ -36,8 +37,11 @@ void GravityGuy::Init()
     audio->Add(MUSIC, "Resources/Music.wav");
     audio->Add(TRANSITION, "Resources/Transition.wav");
 
+    float xScale = window->Width() / 1280.0f;
+    float yScale = window->Height() / 720.0f;
+
     //escala de todas as coisas na tela
-    totalScale = window->Width() / 1280.0f;
+    totalScale = xScale > yScale ? xScale : yScale;
 
     // bounding box não visível
     viewBBox = false;

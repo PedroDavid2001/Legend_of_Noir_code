@@ -12,7 +12,7 @@
 #include "GravityGuy.h"
 #include "Home.h"
 #include "Level1.h"
-#include "Level2.h"
+#include "BossLVL1.h"
 #include "GameOver.h"
 #include "Player.h"
 #include "Platform.h"
@@ -31,6 +31,9 @@ Scene * Level1::scene = nullptr;
 
 void Level1::Init()
 {
+    //setta o level atual na classe principal
+    GravityGuy::currentLvl = LEVEL_1;
+
     // cria gerenciador de cena
     scene = new Scene();
 
@@ -51,9 +54,9 @@ void Level1::Init()
 	// CHÃO
     // ----------------------
 
-	plat = new Platform( 6292.5f, window->Height() + 20.0f, 11, white);//chão
-	scene->Add(plat, STATIC);
-    GravityGuy::playerPos = 0; //redefine a posição do jogador
+	plat = new Platform( 6292.5f, 75.0f, 11, white);    //piso de referencia apenas!!!
+	scene->Add(plat, MOVING);
+    GravityGuy::playerPos = 0;                          //redefine a posição do jogador
 	
     // ----------------------
     // plataformas
@@ -89,7 +92,7 @@ void Level1::Init()
     // ----------------------
 
     // inicia com música
-    GravityGuy::audio->Frequency(MUSIC, 0.94f);
+    GravityGuy::audio->Frequency(MUSIC, 1.0f);
     GravityGuy::audio->Frequency(TRANSITION, 1.0f);
     GravityGuy::audio->Play(MUSIC);
 }
@@ -116,9 +119,9 @@ void Level1::Update()
         GravityGuy::NextLevel<GameOver>();
         GravityGuy::player->Reset();
     }
-    else if (GravityGuy::player->Level() == 1 || window->KeyPress('N'))
+    else if (window->KeyPress('N'))
     {
-        GravityGuy::NextLevel<Level2>();
+        GravityGuy::NextLevel<BossLVL1>();
     }
     else
     {

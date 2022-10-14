@@ -47,14 +47,16 @@ private:
     float xOrigin, yOrigin;                 // posições de origem das plataformas móveis (são alteradas quando o player se move)
     float direcao = 1.0f;                   //direção do movimento (inverte quando a plataforma alcança um limite)
     float velocity;                         //velocidade alterada da plataforma para diferenciar o movimento
+    uint  moving;                           //verifica se player está se movendo
     random_device rd;
     mt19937 mt{ rd() };
 
     uniform_real_distribution<float> altVel {1.0f, 1.5f}; //alterador da velocidade da plataforma
 
 public:
+    uint platType;
     Platform(float posX, float posY, 
-             uint platType, 
+             uint plat, 
              Color tint);                   // construtor    
     ~Platform();                            // destrutor
 
@@ -86,22 +88,22 @@ inline float Platform::Width()
 
 inline float Platform::Bottom()
 {
-    return y + ( platform->Height() / 2.0f );
+    return y + (this->Height() / 2.0f );
 }
 
 inline float Platform::Top()
 {
-    return y - ( platform->Height() / 2.0f );
+    return y - (this->Height() / 2.0f );
 }
 
 inline float Platform::Right()
 {
-    return x + ( platform->Width() / 2.0f );
+    return x + ( this->Width() / 2.0f );
 }
 
 inline float Platform::Left()
 {
-    return x - ( platform->Width() / 2.0f );
+    return x - ( this->Width() / 2.0f );
 }
 
 // ---------------------------------------------------------------------------------
