@@ -1,7 +1,7 @@
-﻿  Player.cpp
+﻿  Background.cpp
   Gerando código
   1 of 1293 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    10 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Finalizada a geração de código
   GravityGuy.vcxproj -> C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\x64\Release\GravityGuy.exe

@@ -56,8 +56,8 @@ void Background::Update()
 {
 	if(!GravityGuy::playerLft && !GravityGuy::playerRgt) {
 		//mesmo se o player estiver parado, as nuvens irão se mover
-		posC1 += ((GravityGuy::platform_velocity / 4.0f) * gameTime) - (10.0f * gameTime);
-		posC2 += ((GravityGuy::platform_velocity / 4.0f) * gameTime) - (10.0f * gameTime);
+		posC1 += ((GravityGuy::platform_velocity / 4.0f) * gameTime);
+		posC2 += ((GravityGuy::platform_velocity / 4.0f) * gameTime);
 
 		posB11 += GravityGuy::platform_velocity * gameTime;
 		posB12 += GravityGuy::platform_velocity * gameTime;
@@ -67,6 +67,10 @@ void Background::Update()
 
 		posB31 += (GravityGuy::platform_velocity / 4.0f) * gameTime;
 		posB32 += (GravityGuy::platform_velocity / 4.0f) * gameTime;
+	}
+	else {
+		posC1 -= (20.0f * gameTime);
+		posC2 -= (20.0f * gameTime);
 	}
 }
 
