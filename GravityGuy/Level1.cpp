@@ -37,6 +37,10 @@ void Level1::Init()
     // cria gerenciador de cena
     scene = new Scene();
 
+    //cria letreiro com o hp do boss
+    position = new Font("Resources/Digital80.png");
+    position->Spacing("Resources/Digital80.dat");
+    
     timer.Start();
 
     // pano de fundo do jogo
@@ -49,14 +53,6 @@ void Level1::Init()
 	
 	Platform* plat;
 	Color white{ 1,1,1,1 };
-
-	// ----------------------
-	// CHÃO
-    // ----------------------
-
-	plat = new Platform( 6292.5f, 75.0f, 11, white);    //piso de referencia apenas!!!
-	scene->Add(plat, MOVING);
-    GravityGuy::playerPos = 0;                          //redefine a posição do jogador
 	
     // ----------------------
     // plataformas
@@ -101,6 +97,16 @@ void Level1::Init()
 
 void Level1::Update()
 {
+    float start = window->CenterX();
+    
+    if (GravityGuy::playerPos < start) {
+        GravityGuy::playerRgt = true;
+        GravityGuy::playerLft = true;
+    }else if(GravityGuy::playerPos >= start) {
+        GravityGuy::playerRgt = false;
+        GravityGuy::playerLft = false;
+    }
+
     if (timer.Elapsed() > 0.2f) {
         snow = new Snow();
         scene->Add(snow, STATIC);
@@ -134,6 +140,10 @@ void Level1::Update()
 
 void Level1::Draw()
 {
+    currentPos.str("");
+    currentPos << "DISTANCE " << (int)GravityGuy::playerPos;
+    position->Draw(window->CenterX(), 50.0f * GravityGuy::totalScale, currentPos.str(), Color{1,1,1,1}, Layer::FRONT, (GravityGuy::totalScale / 2.0f), 0.0f);
+
     backg->Draw();
     scene->Draw();
 
@@ -147,6 +157,7 @@ void Level1::Finalize()
 {
     scene->Remove(GravityGuy::player, MOVING);
     delete scene;
+    delete position;
 }
 
 // ------------------------------------------------------------------------------

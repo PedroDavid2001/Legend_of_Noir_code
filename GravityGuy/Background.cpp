@@ -54,44 +54,19 @@ Background::~Background()
 
 void Background::Update()
 {
-	moving = GravityGuy::player->state;//IDLE = 0
+	if(!GravityGuy::playerLft && !GravityGuy::playerRgt) {
+		//mesmo se o player estiver parado, as nuvens irão se mover
+		posC1 += ((GravityGuy::platform_velocity / 4.0f) * gameTime) - (10.0f * gameTime);
+		posC2 += ((GravityGuy::platform_velocity / 4.0f) * gameTime) - (10.0f * gameTime);
 
-	float playerDist = GravityGuy::player->X() - window->CenterX();
+		posB11 += GravityGuy::platform_velocity * gameTime;
+		posB12 += GravityGuy::platform_velocity * gameTime;
 
-	if (playerDist < 0)
-		playerDist = -playerDist;
+		posB21 += (GravityGuy::platform_velocity / 2.0f) * gameTime;
+		posB22 += (GravityGuy::platform_velocity / 2.0f) * gameTime;
 
-	if (playerDist <= 2.0f) {
-		if (moving && (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))) {
-			// move as nuvens quando estiver andando
-			posC1  -= (PLAYER_VELOCITY / 4.0f) * gameTime;
-			posC2  -= (PLAYER_VELOCITY / 4.0f) * gameTime;
-			posB11 -= PLAYER_VELOCITY * gameTime;
-			posB12 -= PLAYER_VELOCITY * gameTime;
-			posB21 -= (PLAYER_VELOCITY / 2.0f) * gameTime;
-			posB22 -= (PLAYER_VELOCITY / 2.0f) * gameTime;
-			posB31 -= (PLAYER_VELOCITY / 4.0f) * gameTime;
-			posB32 -= (PLAYER_VELOCITY / 4.0f) * gameTime;
-		}
-		else if (moving && (window->KeyDown(VK_LEFT) || window->KeyDown('A'))) {
-			// move as nuvens quando estiver andando
-			posC1  += (PLAYER_VELOCITY / 4.0f) * gameTime;
-			posC2  += (PLAYER_VELOCITY / 4.0f) * gameTime;
-			posB11 += PLAYER_VELOCITY * gameTime;
-			posB12 += PLAYER_VELOCITY * gameTime;
-			posB21 += (PLAYER_VELOCITY / 2.0f) * gameTime;
-			posB22 += (PLAYER_VELOCITY / 2.0f) * gameTime;
-			posB31 += (PLAYER_VELOCITY / 4.0f) * gameTime;
-			posB32 += (PLAYER_VELOCITY / 4.0f) * gameTime;
-		}
-		else {
-			posC1 -= (PLAYER_VELOCITY / 20.0f) * gameTime;
-			posC2 -= (PLAYER_VELOCITY / 20.0f) * gameTime;
-		}
-   }
-	else {
-		posC1 -= (PLAYER_VELOCITY / 20.0f) * gameTime;
-		posC2 -= (PLAYER_VELOCITY / 20.0f) * gameTime;
+		posB31 += (GravityGuy::platform_velocity / 4.0f) * gameTime;
+		posB32 += (GravityGuy::platform_velocity / 4.0f) * gameTime;
 	}
 }
 

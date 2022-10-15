@@ -1,32 +1,7 @@
-﻿  compilation object save succeeded; see C:\Users\User\Downloads\Game_Unidade_2-main\Game_Unidade_2-main\GravityGuy\Shaders\Pixel.cso
-  compilation object save succeeded; see C:\Users\User\Downloads\Game_Unidade_2-main\Game_Unidade_2-main\GravityGuy\Shaders\Vertex.cso
-  Animation.cpp
-  Audio.cpp
-  Background.cpp
-  Bullet.cpp
-  Engine.cpp
-  Font.cpp
-  Game.cpp
-  GameOver.cpp
-  Geometry.cpp
-  Graphics.cpp
-  GravityGuy.cpp
-  Home.cpp
-  Image.cpp
-  Level1.cpp
-  Level2.cpp
-  Object.cpp
-  Platform.cpp
-  Player.cpp
-  Renderer.cpp
-  Scene.cpp
-  Compiling...
-  Snow.cpp
-  Sound.cpp
-  Sprite.cpp
-  Texture.cpp
-  TileSet.cpp
-  Timer.cpp
-  Window.cpp
-Level1.obj : error LNK2001: unresolved external symbol "public: int __cdecl Player::Level(void)" (?Level@Player@@QEAAHXZ)
-C:\Users\User\Downloads\Game_Unidade_2-main\Game_Unidade_2-main\x64\Release\GravityGuy.exe : fatal error LNK1120: 1 unresolved externals
+﻿  Player.cpp
+  Gerando código
+  1 of 1293 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    10 functions had inline decision re-evaluated but remain unchanged
+  Finalizada a geração de código
+  GravityGuy.vcxproj -> C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\x64\Release\GravityGuy.exe

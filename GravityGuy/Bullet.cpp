@@ -11,6 +11,7 @@
 
 #include "Bullet.h"
 #include "Level1.h"
+#include "BossLVL1.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -20,7 +21,14 @@ Bullet::Bullet(bool direction, float scale)
     this->scale = scale;
     this->direction = direction;
 
-    sprite = new Sprite("Resources/bullet.png");
+    tileset = new TileSet("Resources/bullet.png", 18, 10, 5, 10);
+    anim = new Animation(tileset, 0.06f, true);
+
+    uint right[5] = { 0, 1, 2, 3, 4 };
+    uint left[5] = { 9, 8, 7, 6, 5 };
+
+    anim->Add(0, left, 5);
+    anim->Add(1, right, 5);
 
     BBox(new Rect(
         -1.0f * this->Width() / 2.0f,
@@ -39,19 +47,50 @@ Bullet::Bullet(bool direction, float scale)
 
 Bullet::~Bullet()
 {
-    delete sprite;
+    delete anim;
+    delete tileset;
+}
+
+// ---------------------------------------------------------------------------------
+
+void Bullet::OnCollision(Object* obj) {
+	
+	if (obj->type == BOSS) {
+		Boss* boss = (Boss*)obj;
+		boss->hp -= 1;
+		if (GravityGuy::currentLvl == BOSS_1)
+			BossLVL1::scene->Delete(this, MOVING);
+	}
 }
 
 // ---------------------------------------------------------------------------------
 
 void Bullet::Update()
 {
-    if(direction)
-        Translate(600.0f * gameTime, 0);
-    else
-        Translate(-600.0f * gameTime, 0);
+    if (!GravityGuy::playerLft && !GravityGuy::playerRgt) {
+        if (direction) {
+            Translate(( 700.0f + GravityGuy::platform_velocity ) * gameTime, 0);
+        }
+        else
+            Translate(( -700.0f + GravityGuy::platform_velocity ) * gameTime, 0);
+    }
+    else {
+        if (direction) {
+            Translate(700.0f * gameTime, 0);
+        }
+        else
+            Translate(-700.0f * gameTime, 0);
+    }
+    
 
     //deleta quando sair da tela
-    if (x < 0 || x > window->Width())
-        Level1::scene->Delete(this, MOVING);
+	if (x < 0 || x > window->Width()) {
+		if (GravityGuy::currentLvl == LEVEL_1)
+			Level1::scene->Delete(this, MOVING);
+		else if (GravityGuy::currentLvl == BOSS_1)
+			BossLVL1::scene->Delete(this, MOVING);
+	}
+
+    anim->Select((uint)direction);
+    anim->NextFrame();
 }

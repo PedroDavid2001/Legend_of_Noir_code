@@ -33,14 +33,13 @@ class Boss : public Object
 private:
     TileSet* tileSet = nullptr;             // sprite da plataforma
     Animation* anim = nullptr;
-    uint hp;
 public:
-    uint boss;                              //armazena o boss atual
+	uint hp;
+	uint boss;                              //armazena o boss atual
     Boss( uint boss );                      // construtor    
     ~Boss();                                 // destrutor
 
     void Update();                          // atualização do objeto
-    void OnCollision(Object* obj);
     void Draw();                            // desenho do objeto
     float Height();
     float Width();

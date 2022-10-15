@@ -21,24 +21,33 @@
 Boss::Boss(uint boss)
 {
 	type = BOSS;
+	this->boss = boss;
 
-	tileSet = new TileSet("Resources/boss_level1.png", 150, 300, 1, 1);
-	anim = new Animation(tileSet, 0.120f, true);
+	switch (boss) {
+	case BANSHEE:
+		
+		tileSet = new TileSet("Resources/boss_level1.png", 150, 300, 1, 1);
+		anim = new Animation(tileSet, 0.120f, true);
 
-	uint idle[1] = { 0 };
+		uint idle[1] = { 0 };
 
-	anim->Add(0, idle, 1);
+		anim->Add(0, idle, 1);
 
-	// cria bounding box
-	BBox(new Rect(
-		-1.0f * this->Width() / 2.0f,
-		-1.0f * this->Height() / 2.0f,
-		this->Width() / 2.0f,
-		this->Height() / 2.0f
-	));
-	hp = 100;
-	// posição inicial
-	MoveTo(window->Width() - (this->Width() / 2.0f), window->Height() - (this->Height() / 2.0f), 0.55f);
+		// cria bounding box
+		BBox(new Rect(
+			-1.0f * this->Width() / 2.0f,
+			-1.0f * this->Height() / 2.0f,
+			this->Width() / 2.0f,
+			this->Height() / 2.0f
+		));
+		hp = 200;
+
+		// posição inicial da banshee
+		MoveTo(window->Width() - (this->Width() / 2.0f), ( 470.0f * GravityGuy::totalScale ), 0.55f);
+		
+		break;
+	}
+	
 }
 
 // ---------------------------------------------------------------------------------
@@ -50,17 +59,6 @@ Boss::~Boss()
 }
 
 // ---------------------------------------------------------------------------------
-
-void Boss::OnCollision(Object* obj)
-{
-	if (type == BULLET) {
-		hp -= 1;
-
-		//verifica qual o level atual 
-		if (GravityGuy::currentLvl == 1 )
-			BossLVL1::scene->Delete(obj, MOVING);
-	}
-}
 
 // ---------------------------------------------------------------------------------
 

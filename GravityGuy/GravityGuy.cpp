@@ -21,8 +21,9 @@ Game*   GravityGuy::level = nullptr;
 Audio*  GravityGuy::audio = nullptr;
 bool    GravityGuy::viewBBox = false;
 float   GravityGuy::playerPos = 0.0f;
-float   GravityGuy::playerLftVel = PLAYER_VELOCITY;
-float   GravityGuy::playerRgtVel = 0.0f;
+bool	GravityGuy::playerLft = false;
+float   GravityGuy::platform_velocity = 0.0f;
+bool	GravityGuy::playerRgt = false;
 float   GravityGuy::totalScale = 1.0f;
 uint    GravityGuy::currentLvl = 0;
 Player* GravityGuy::player = nullptr;
@@ -60,7 +61,7 @@ void GravityGuy::Update()
 {
     // habilita/desabilita visualização da bounding box
     if (window->KeyPress('B'))
-        viewBBox = !viewBBox;    
+        viewBBox = !viewBBox;   
 
     // atualiza nível
     level->Update();
@@ -96,9 +97,9 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
     // configura o motor
     //engine->window->Mode(WINDOWED);
-    //engine->window->Size(700, 500);
+    //engine->window->Size(640, 480);
     engine->window->Color(30, 50, 80);
-    engine->window->Title("A Night Of Thriller");
+    engine->window->Title("Legend Of Noir");
     engine->window->Icon(IDI_ICON);
     engine->window->Cursor(IDC_CURSOR);
     //engine->graphics->VSync(true);

@@ -52,9 +52,6 @@ Platform::Platform(float posX, float posY, uint plat, Color tint) : color(tint)
     case PLAT_600X300:  
         platform = new Sprite("Resources/plat600x300.png"); platType = PLAT_600X300;
         break;
-    case 11:
-        platform = new Sprite("Resources/floor.png"); platType = 11;
-        break;
     }
     
     BBox( new Rect( 
@@ -66,7 +63,7 @@ Platform::Platform(float posX, float posY, uint plat, Color tint) : color(tint)
 
     xOrigin = posX * GravityGuy::totalScale;
     yOrigin = posY * GravityGuy::totalScale;
-    velocity = PLATFORM_VELOCITY * altVel(mt);
+    velocity = 80.0f * altVel(mt);
 
     MoveTo( posX * GravityGuy::totalScale, posY * GravityGuy::totalScale, Layer::MIDDLE);
 }
@@ -82,71 +79,24 @@ Platform::~Platform()
 
 void Platform::Update()
 {
-    moving = GravityGuy::player->state;//IDLE = 0
+	if (platType == PLAT_150X50_MOBILE_H) {    
 
-    float playerDist = GravityGuy::player->X() - window->CenterX();
+		//além invés de transladar, a plataforma tem sua origem alterada 
+		if (!GravityGuy::playerRgt)
+			xOrigin += GravityGuy::platform_velocity * gameTime;
+		if (!GravityGuy::playerLft)
+			xOrigin += GravityGuy::platform_velocity * gameTime;
+	}
+	
+    if (!GravityGuy::playerRgt)
+		Translate(GravityGuy::platform_velocity * gameTime, 0);
+	if (!GravityGuy::playerLft)
+		Translate(GravityGuy::platform_velocity * gameTime, 0);
+	
 
-    if (playerDist < 0)
-        playerDist = -playerDist;
+    if (platType == PLAT_150X50_MOBILE_V ) {    //plataforma vertical
 
-    //os objetos se movem apenas se o jogador estiver proximo do centro da tela
-    if (playerDist <= 2.0f) {
-        if ( type == 11) {
-            
-            if ( this->Right() > window->Width() ) {
-
-                GravityGuy::playerRgtVel = 0.0f;//player não se moverá
-                
-                if  ( (window->KeyDown(VK_RIGHT) || window->KeyDown('D')) && moving != 0 )
-                    Translate(-PLAYER_VELOCITY * gameTime, 0);
-            }
-            else {
-                GravityGuy::playerRgtVel = PLAYER_VELOCITY;
-            }
-
-            if ( this->Left() < 0 ) {
-
-                GravityGuy::playerLftVel = 0.0f;//player não se moverá
-
-                if ( (window->KeyDown(VK_LEFT) || window->KeyDown('A')) && moving != 0 )
-                    Translate(PLAYER_VELOCITY * gameTime, 0);
-            }
-            else {
-                GravityGuy::playerLftVel = PLAYER_VELOCITY;
-            }
-        }
-		else if (type == PLAT_150X50_MOBILE_V) {    //plataforma vertical
-
-			if (GravityGuy::playerRgtVel == 0.0f && (moving != 0 && (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))))
-				Translate(-PLAYER_VELOCITY * gameTime, 0);
-			if (GravityGuy::playerRgtVel == 0.0f && (moving != 0 && (window->KeyDown(VK_LEFT) || window->KeyDown('A'))))
-				Translate(PLAYER_VELOCITY * gameTime, 0);
-			
-		}
-		else if (type == PLAT_150X50_MOBILE_H) {    //plataforma horizontal
-
-			//ao invés de transladar, a plataforma tem sua origem alterada 
-			if (GravityGuy::playerRgtVel == 0.0f && (moving != 0 && (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))))
-				xOrigin -= PLAYER_VELOCITY * gameTime;
-			if (GravityGuy::playerRgtVel == 0.0f && (moving != 0 && (window->KeyDown(VK_LEFT) || window->KeyDown('A'))))
-				xOrigin += PLAYER_VELOCITY * gameTime;
-
-		}
-		else {
-			if (GravityGuy::playerRgtVel == 0.0f && (moving != 0 && (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))))
-				Translate(-PLAYER_VELOCITY * gameTime, 0);
-			if (GravityGuy::playerRgtVel == 0.0f && (moving != 0 && (window->KeyDown(VK_LEFT) || window->KeyDown('A'))))
-				Translate(PLAYER_VELOCITY * gameTime, 0);
-		}
-    }
-    else {
-        GravityGuy::playerRgtVel = PLAYER_VELOCITY;
-        GravityGuy::playerLftVel = PLAYER_VELOCITY;
-    }
-
-    if (type == PLAT_150X50_MOBILE_V ) {    //plataforma vertical
-
-        float diff = this->Y() - yOrigin;
+        float diff = y - yOrigin;
 
         if (diff < 0)
             diff = -diff;
@@ -157,17 +107,17 @@ void Platform::Update()
 		Translate(0, velocity * direcao * gameTime);
             
     }
-    else if (type == PLAT_150X50_MOBILE_H ) {    //plataforma horizontal
+    else if (platType == PLAT_150X50_MOBILE_H ) {    //plataforma horizontal 
 
-        float diff = this->X() - xOrigin;
+        float diff = x - xOrigin;
 
         if (diff < 0)
             diff = -diff;
 
-        if (diff >= ( 100.0f * GravityGuy::totalScale )) 
+        if (diff >= ( 150.0f * GravityGuy::totalScale )) 
             direcao = -direcao;
 
-        Translate(PLATFORM_VELOCITY * direcao * gameTime, 0);
+        Translate(100.0f * direcao * gameTime, 0);
     }
 }
 

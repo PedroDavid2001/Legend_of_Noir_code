@@ -20,14 +20,19 @@
 #include "Player.h"
 #include "Background.h"
 #include "Boss.h"
+#include "Font.h"
+#include <sstream>
+using std::stringstream;
 
 // ------------------------------------------------------------------------------
 
 class BossLVL1 : public Game
 {
 private:
-    Background* backg = nullptr;   // pano de fundo animado
-    Boss *      boss  = nullptr;
+    Background*		backg = nullptr;   // pano de fundo animado
+    Boss *			boss  = nullptr;
+	Font*			bossHP = nullptr;
+	stringstream	currentHP;
 public:
     static Scene* scene;           // cena do nível
 

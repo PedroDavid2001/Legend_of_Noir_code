@@ -18,18 +18,23 @@
 #include "Game.h"
 #include "Scene.h"
 #include "Player.h"
+#include "Font.h"
 #include "Timer.h"
 #include "Snow.h"
 #include "Background.h"
+#include <sstream>
+using std::stringstream;
 
 // ------------------------------------------------------------------------------
 
 class Level1 : public Game
 {
 private:
-    Background* backg = nullptr;   // pano de fundo animado
-    Snow* snow = nullptr;
-    Timer timer;
+    Background*     backg = nullptr;   // pano de fundo animado
+    Snow*           snow = nullptr;
+    Timer           timer;
+    Font*           position = nullptr;
+    stringstream	currentPos;
 public:
     static Scene* scene;           // cena do nível
 

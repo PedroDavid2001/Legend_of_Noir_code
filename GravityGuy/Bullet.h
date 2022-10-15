@@ -15,14 +15,16 @@
 // ------------------------------------------------------------------------------
 
 #include "Object.h"
-#include "Sprite.h"
+#include "Animation.h"                  // animação de sprites
+#include "TileSet.h"
 
 // ------------------------------------------------------------------------------
 
 class Bullet : public Object
 {
 private:
-    Sprite* sprite = nullptr;
+    TileSet* tileset;                
+    Animation* anim;                  
     bool direction;             //left = false; right = true
     float scale;
 public:
@@ -30,21 +32,22 @@ public:
     ~Bullet();
     void Update();
     void Draw();
+	void OnCollision(Object* obj);
     float Width();
     float Height();
 };
 // ------------------------------------------------------------------------------
 
-inline void Bullet::Draw() { sprite->Draw(x, y, z, scale); }
+inline void Bullet::Draw() { anim->Draw(x, y, z, scale); }
 
 inline float Bullet::Height()
 {
-    return sprite->Height() * scale;
+    return tileset->TileHeight() * scale;
 }
 
 inline float Bullet::Width()
 {
-    return sprite->Width() * scale;
+    return tileset->TileWidth() * scale;
 }
 
 // ------------------------------------------------------------------------------

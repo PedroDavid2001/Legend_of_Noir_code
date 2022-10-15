@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\x64\Release\GravityGuy.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\GravityGuy\Shaders\Pixel.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\GravityGuy\Shaders\Vertex.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

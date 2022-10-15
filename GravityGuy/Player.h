@@ -18,10 +18,11 @@
 #include "Types.h"                      // tipos específicos da engine
 #include "Object.h"                     // interface de Object
 #include "Animation.h"                  // animação de sprites
+#include "TileSet.h"
 
 // ------------------------------------------------------------------------------
 
-enum PlayerState { IDLE, MOVE, JUMP, ATACK, HURT };         
+enum PlayerState { IDLE, IDLE_INV, MOVE, MOVE_INV, JUMP, JUMP_INV, ATACK, HURT };
 
 // ---------------------------------------------------------------------------------
 
@@ -33,8 +34,8 @@ private:
     Timer		jumpTimer;				//timer usado para definir o tempo do pulo
     Timer       shootTimer;
     float       jumpForce;
+    float       gravity;
 	bool        canJump;				//verifica se o player está sobre uma plataforma para poder pular
-    bool        falling;                //verifica se existe algo abaixo do player
     bool        direction;              //left = false; right = true
     float       scale;
 	

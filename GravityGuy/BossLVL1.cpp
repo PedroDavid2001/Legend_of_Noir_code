@@ -16,7 +16,6 @@
 #include "Player.h"
 #include "Platform.h"
 #include "Background.h"
-
 #include <string>
 #include <fstream>
 using std::ifstream;
@@ -31,10 +30,18 @@ Scene* BossLVL1::scene = nullptr;
 
 void BossLVL1::Init()
 {
+    //player se mexe normalmente na tela de boss
+    GravityGuy::playerRgt = true;
+    GravityGuy::playerLft = true;
+
     GravityGuy::currentLvl = BOSS_1;
 
     // cria gerenciador de cena
     scene = new Scene();
+
+	//cria letreiro com o hp do boss
+	bossHP = new Font("Resources/Digital80.png");
+	bossHP->Spacing("Resources/Digital80.dat");
 
     // pano de fundo do jogo
     Color dark{ 0.4f, 0.4f, 0.4f, 1.0f };
@@ -52,7 +59,7 @@ void BossLVL1::Init()
     // piso
     // ----------------------
     Color white{ 1,1,1,1 };
-    Platform* plat = new Platform(640.0f, 645.0f, FLOOR_1280X300, white);
+    Platform* plat = new Platform(640.0f, 770.0f, FLOOR_1280X300, white);
     scene->Add(plat, MOVING);
 
     // ----------------------
@@ -88,6 +95,9 @@ void BossLVL1::Update()
 
 void BossLVL1::Draw()
 {
+	currentHP.str("");
+	currentHP << "BOSS HP " << boss->hp;
+	bossHP->Draw(1000.0f * GravityGuy::totalScale, 50.0f * GravityGuy::totalScale, currentHP.str(), Color{ 1,1,1,1 }, Layer::FRONT, (GravityGuy::totalScale / 2.0f), 0.0f);
     backg->Draw();
     scene->Draw();
 
@@ -101,6 +111,7 @@ void BossLVL1::Finalize()
 {
     scene->Remove(GravityGuy::player, MOVING);
     delete scene;
+	delete bossHP;
 }
 
 // ------------------------------------------------------------------------------

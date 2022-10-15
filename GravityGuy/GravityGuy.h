@@ -18,8 +18,6 @@
 #include "Audio.h"
 #include "Player.h"
 #include "Resources.h"
-#define PLAYER_VELOCITY 400.0f
-#define PLATFORM_VELOCITY 200.0f
 
 // ------------------------------------------------------------------------------
 
@@ -32,7 +30,6 @@ class GravityGuy : public Game
 {
 private:
     static Game * level;            // nível atual do jogo
-
 public:
     static Player *player;          // jogador 
     static uint currentLvl;         //inteiro que indica qual o level atual
@@ -41,8 +38,10 @@ public:
     static bool viewBBox;           // estado da bounding box
     static float totalScale;
 
-    static float playerLftVel;      //velocidade do jogador usada na esquerda
-    static float playerRgtVel;      //velocidade do jogador usada na direita
+	static float platform_velocity;
+
+    static bool playerLft;			//verifica se o jogador pode ir para esquerda 
+    static bool playerRgt;			//verifica se o jogador pode ir para direita
 
     void Init();                    // inicializa jogo
     void Update();                  // atualiza lógica do jogo
