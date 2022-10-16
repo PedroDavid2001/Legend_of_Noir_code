@@ -167,6 +167,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="BossLVL1.cpp" />
+    <ClCompile Include="LevelVitor.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="BossLVL1.h" />
+    <ClInclude Include="LevelVitor.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
@@ -248,6 +250,7 @@
   <ItemGroup>
     <Text Include="Level1.txt" />
     <Text Include="Level2.txt" />
+    <Text Include="LevelVitor.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

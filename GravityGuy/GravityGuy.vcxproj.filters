@@ -114,6 +114,9 @@
     <ClCompile Include="GravityGuy.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="LevelVitor.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resources.h">
@@ -206,6 +209,9 @@
     <ClInclude Include="Boss.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="LevelVitor.h">
+      <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Vertex.hlsl">
@@ -225,6 +231,9 @@
       <Filter>Game\Arquivos de Recurso</Filter>
     </Text>
     <Text Include="Level2.txt">
+      <Filter>Game\Arquivos de Recurso</Filter>
+    </Text>
+    <Text Include="LevelVitor.txt">
       <Filter>Game\Arquivos de Recurso</Filter>
     </Text>
   </ItemGroup>

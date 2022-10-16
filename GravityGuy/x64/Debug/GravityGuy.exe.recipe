@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\suporte\Downloads\Game_Unidade_2-main\x64\Debug\GravityGuy.exe</FullPath>
+      <FullPath>D:\Users\vitor\git\Game_Unidade_2\x64\Debug\GravityGuy.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\suporte\Downloads\Game_Unidade_2-main\GravityGuy\Shaders\Pixel.cso</FullPath>
+      <FullPath>D:\Users\vitor\git\Game_Unidade_2\GravityGuy\Shaders\Pixel.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\suporte\Downloads\Game_Unidade_2-main\GravityGuy\Shaders\Vertex.cso</FullPath>
+      <FullPath>D:\Users\vitor\git\Game_Unidade_2\GravityGuy\Shaders\Vertex.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

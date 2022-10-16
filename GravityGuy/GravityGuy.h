@@ -22,7 +22,7 @@
 // ------------------------------------------------------------------------------
 
 enum Sounds {MENU, MUSIC, TRANSITION};
-enum CurrentLevel { LEVEL_1, BOSS_1 };
+enum CurrentLevel { LEVEL_1, BOSS_1, LEVEL_VITOR};
 
 // ------------------------------------------------------------------------------
 
