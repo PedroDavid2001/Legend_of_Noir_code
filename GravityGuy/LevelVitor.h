@@ -31,7 +31,6 @@ class LevelVitor : public Game
 {
 private:
     Background* backg = nullptr;   // pano de fundo animado
-    Snow* snow = nullptr;
     Timer           timer;
     Font* position = nullptr;
     stringstream	currentPos;

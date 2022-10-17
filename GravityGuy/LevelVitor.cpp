@@ -61,7 +61,7 @@ void LevelVitor::Init()
     float posX, posY;
     uint  platType;
     ifstream fin;
-    fin.open("Level1.txt");
+    fin.open("LevelVitor.txt");
     fin >> posX;
 
     while (!fin.eof())
@@ -106,12 +106,6 @@ void LevelVitor::Update()
     else if (GravityGuy::playerPos >= start) {
         GravityGuy::playerRgt = false;
         GravityGuy::playerLft = false;
-    }
-
-    if (timer.Elapsed() > 0.2f) {
-        snow = new Snow();
-        scene->Add(snow, STATIC);
-        timer.Reset();
     }
 
     if (window->KeyPress(VK_ESCAPE))

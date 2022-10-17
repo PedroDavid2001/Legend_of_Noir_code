@@ -5,10 +5,10 @@
 //
 //    FLOOR_2560X150 = 0
 //    FLOOR_2560X300 = 1
-//    PLAT_150X50_FIXED = 2 
-//    PLAT_150X50_MOBILE_H = 3
+//    PLAT_150X50_FIXED = 2  // normal (degrau no solo)
+//    PLAT_150X50_MOBILE_H = 3 // balança pra lateral 
 //    PLAT_150X50_MOBILE_V = 4
-//    PLAT_200X100 = 5
+//    PLAT_200X100 = 5      // grande e alta
 //    FLOOR_1280X300 = 6
 //    PLAT_400X100 = 7
 //    PLAT_600X300 = 8
@@ -17,11 +17,16 @@
 //
 //  posX    posY    platType
     1280    645     0
-    1355    545     2
-    1830    520     5
-    2280    445     3
-    3200    570     6
-    4200    370     7
+    900     545     2  
+    1300    520     5
+    1800    520     5
+    2200    445     3
+    2700    445     3
+
+    3650    570     6
+    3650    395     2  
+    3900    340     3
+    4500    350     7
     4850    570     8
     4870    270     5
     5650    645     9

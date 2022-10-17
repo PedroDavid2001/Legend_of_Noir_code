@@ -13,6 +13,7 @@
 #include "Home.h"
 #include "BossLVL1.h"
 #include "GameOver.h"
+#include "LevelVitor.h"
 #include "Player.h"
 #include "Platform.h"
 #include "Background.h"
@@ -75,7 +76,7 @@ void BossLVL1::Update()
     if (window->KeyPress(VK_ESCAPE) || window->KeyPress('N'))
     {
         GravityGuy::audio->Stop(MUSIC);
-        GravityGuy::NextLevel<Home>();
+        GravityGuy::NextLevel<LevelVitor>();   // trocar aqui pelas outras fases
         GravityGuy::player->Reset();
     }
     else if ( GravityGuy::player->hp <= 0 )
