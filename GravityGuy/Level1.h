@@ -33,8 +33,8 @@ private:
     Background*     backg = nullptr;   // pano de fundo animado
     Snow*           snow = nullptr;
     Timer           timer;
-    Font*           position = nullptr;
-    stringstream	currentPos;
+    Font*           playerHp = nullptr;
+    stringstream	currentHp;
 public:
     static Scene* scene;           // cena do nível
 

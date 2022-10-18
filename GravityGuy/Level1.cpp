@@ -37,9 +37,9 @@ void Level1::Init()
     // cria gerenciador de cena
     scene = new Scene();
 
-    //cria letreiro com o hp do boss
-    position = new Font("Resources/Digital80.png");
-    position->Spacing("Resources/Digital80.dat");
+    //cria letreiro com o hp do player
+    playerHp = new Font("Resources/Digital80.png");
+    playerHp->Spacing("Resources/Digital80.dat");
     
     timer.Start();
 
@@ -140,9 +140,9 @@ void Level1::Update()
 
 void Level1::Draw()
 {
-    currentPos.str("");
-    currentPos << "DISTANCE " << (int)GravityGuy::playerPos;
-    position->Draw(window->CenterX(), 50.0f * GravityGuy::totalScale, currentPos.str(), Color{1,1,1,1}, Layer::FRONT, (GravityGuy::totalScale / 2.0f), 0.0f);
+    currentHp.str("");
+    currentHp << "Life  " << (int)GravityGuy::player->hp;
+    playerHp->Draw(100.0f * GravityGuy::totalScale, 650.0f * GravityGuy::totalScale, currentHp.str(), Color{1,1,1,1}, Layer::FRONT, GravityGuy::totalScale, 0.0f);
 
     backg->Draw();
     scene->Draw();
@@ -157,7 +157,7 @@ void Level1::Finalize()
 {
     scene->Remove(GravityGuy::player, MOVING);
     delete scene;
-    delete position;
+    delete playerHp;
 }
 
 // ------------------------------------------------------------------------------

@@ -21,7 +21,7 @@ Bullet::Bullet(bool direction, float scale)
     this->scale = scale;
     this->direction = direction;
 
-    tileset = new TileSet("Resources/bullet.png", 18, 10, 5, 10);
+    tileset = new TileSet("Resources/bullet.png", 18, 5, 5, 10);
     anim = new Animation(tileset, 0.06f, true);
 
     uint right[5] = { 0, 1, 2, 3, 4 };
@@ -58,7 +58,7 @@ void Bullet::OnCollision(Object* obj) {
 	if (obj->type == BOSS) {
 		Boss* boss = (Boss*)obj;
 		boss->hp -= 1;
-		if (GravityGuy::currentLvl == BOSS_1)
+		if (GravityGuy::currentLvl == BOSS_LEVEL)
 			BossLVL1::scene->Delete(this, MOVING);
 	}
 }
@@ -87,7 +87,7 @@ void Bullet::Update()
 	if (x < 0 || x > window->Width()) {
 		if (GravityGuy::currentLvl == LEVEL_1)
 			Level1::scene->Delete(this, MOVING);
-		else if (GravityGuy::currentLvl == BOSS_1)
+		else if (GravityGuy::currentLvl == BOSS_LEVEL)
 			BossLVL1::scene->Delete(this, MOVING);
 	}
 

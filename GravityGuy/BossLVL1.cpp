@@ -35,7 +35,7 @@ void BossLVL1::Init()
     GravityGuy::playerRgt = true;
     GravityGuy::playerLft = true;
 
-    GravityGuy::currentLvl = BOSS_1;
+    GravityGuy::currentLvl = BOSS_LEVEL;
 
     // cria gerenciador de cena
     scene = new Scene();

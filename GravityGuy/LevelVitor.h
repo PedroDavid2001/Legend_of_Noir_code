@@ -20,7 +20,6 @@
 #include "Player.h"
 #include "Font.h"
 #include "Timer.h"
-#include "Snow.h"
 #include "Background.h"
 #include <sstream>
 using std::stringstream;
