@@ -32,7 +32,7 @@ Background::Background(Color tint) : color(tint)
 		posB11 = posB12 = x;
 		posB21 = posB22 = x;
 		posB31 = posB32 = x;
-
+		
 		if (GravityGuy::currentLvl == LEVEL_1) {
 			build_11 = new Sprite("Resources/city.png");
 			build_12 = new Sprite("Resources/city.png");
@@ -41,15 +41,17 @@ Background::Background(Color tint) : color(tint)
 			build_31 = new Sprite("Resources/city3.png");
 			build_32 = new Sprite("Resources/city3.png");
 		}
-		else if (GravityGuy::currentLvl == LEVEL_2) {
+		else if(GravityGuy::currentLvl == LEVEL_2) {
+
 			build_11 = new Sprite("Resources/city_fase2.png");
 			build_12 = new Sprite("Resources/city_fase2.png");
 			build_21 = new Sprite("Resources/city2_fase2.png");
 			build_22 = new Sprite("Resources/city2_fase2.png");
-			build_31 = new Sprite("Resources/city3_fase2.png");
+			build_31 = new Sprite("Resources/city3_fase2.png"); 
 			build_32 = new Sprite("Resources/city3_fase2.png");
 		}
 		else if (GravityGuy::currentLvl == LEVEL_3) {
+
 			build_11 = new Sprite("Resources/city_fase3.png");
 			build_12 = new Sprite("Resources/city_fase3.png");
 			build_21 = new Sprite("Resources/city2_fase3.png");
@@ -58,6 +60,7 @@ Background::Background(Color tint) : color(tint)
 			build_32 = new Sprite("Resources/city3_fase3.png");
 		}
 		else if (GravityGuy::currentLvl == LEVEL_4) {
+
 			build_11 = new Sprite("Resources/city_fase4.png");
 			build_12 = new Sprite("Resources/city_fase4.png");
 			build_21 = new Sprite("Resources/city2_fase4.png");
@@ -65,8 +68,7 @@ Background::Background(Color tint) : color(tint)
 			build_31 = new Sprite("Resources/city3_fase4.png");
 			build_32 = new Sprite("Resources/city3_fase4.png");
 		}
-		
-		
+
 	}
 	else {	
 		bossBg = new Sprite("Resources/background_boss.png");

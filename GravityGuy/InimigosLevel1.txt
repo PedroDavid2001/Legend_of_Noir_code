@@ -1,0 +1,22 @@
+// Gravity Guy
+// Criação:        14 Fev 2013
+// Atualização:    27 Set 2021
+// Descrição:   Posição das plataformas do nível 1
+//
+//    FLOOR_2560X150 = 0
+//    FLOOR_2560X300 = 1
+//    PLAT_150X50_FIXED = 2 
+//    PLAT_150X50_MOBILE_H = 3
+//    PLAT_150X50_MOBILE_V = 4
+//    PLAT_200X100 = 5
+//    FLOOR_1280X300 = 6
+//    PLAT_400X100 = 7
+//    PLAT_600X300 = 8
+//    PLAT_400X150 = 9 
+//    PLAT_400X400 = 10
+//
+//  posX    posY    platType
+    900    500     1
+    
+ 
+    
