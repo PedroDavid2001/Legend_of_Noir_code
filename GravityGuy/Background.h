@@ -33,6 +33,7 @@ private:
     Sprite * clouds1;                   // nuvens dinamicas
     Sprite * clouds2; 
 	
+	Sprite*  bossBg;
 	
 	Sprite * build_11; //predios mais proximos
 	Sprite * build_12;

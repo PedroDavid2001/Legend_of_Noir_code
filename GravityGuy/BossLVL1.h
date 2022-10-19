@@ -32,7 +32,9 @@ private:
     Background*		backg = nullptr;   // pano de fundo animado
     Boss *			boss  = nullptr;
 	Font*			bossHP = nullptr;
-	stringstream	currentHP;
+	stringstream	currentBossHP;
+	Font* playerHp = nullptr;
+	stringstream	currentHp;
 public:
     static Scene* scene;           // cena do nível
 

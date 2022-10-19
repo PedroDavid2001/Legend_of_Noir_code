@@ -11,6 +11,9 @@
 
 #include "Bullet.h"
 #include "Level1.h"
+#include "Level2.h"
+#include "Level3.h"
+#include "Level4.h"
 #include "BossLVL1.h"
 
 // ---------------------------------------------------------------------------------
@@ -21,7 +24,7 @@ Bullet::Bullet(bool direction, float scale)
     this->scale = scale;
     this->direction = direction;
 
-    tileset = new TileSet("Resources/bullet.png", 18, 10, 5, 10);
+    tileset = new TileSet("Resources/bullet.png", 18, 5, 5, 10);
     anim = new Animation(tileset, 0.06f, true);
 
     uint right[5] = { 0, 1, 2, 3, 4 };
@@ -38,9 +41,9 @@ Bullet::Bullet(bool direction, float scale)
     ));
     
     if(direction)
-        MoveTo(GravityGuy::player->Right(), GravityGuy::player->Y(), Layer::FRONT);
+        MoveTo(GravityGuy::player->Right(), GravityGuy::player->Y() - 10 * GravityGuy::totalScale, Layer::FRONT);
     else
-        MoveTo(GravityGuy::player->Left(), GravityGuy::player->Y(), Layer::FRONT);
+        MoveTo(GravityGuy::player->Left(), GravityGuy::player->Y() - 10 * GravityGuy::totalScale, Layer::FRONT);
 }
 
 // ---------------------------------------------------------------------------------
@@ -56,10 +59,17 @@ Bullet::~Bullet()
 void Bullet::OnCollision(Object* obj) {
 	
 	if (obj->type == BOSS) {
-		Boss* boss = (Boss*)obj;
-		boss->hp -= 1;
-		if (GravityGuy::currentLvl == BOSS_1)
-			BossLVL1::scene->Delete(this, MOVING);
+		float xDiff = x - obj->X();
+
+		if (xDiff < 0)
+			xDiff = -xDiff;
+
+		if (xDiff <= 50 * GravityGuy::totalScale) {
+			Boss* boss = (Boss*)obj;
+			boss->hp -= 1;
+			if (GravityGuy::currentLvl == BOSS_LEVEL)
+				BossLVL1::scene->Delete(this, MOVING);
+		}
 	}
 }
 
@@ -87,7 +97,13 @@ void Bullet::Update()
 	if (x < 0 || x > window->Width()) {
 		if (GravityGuy::currentLvl == LEVEL_1)
 			Level1::scene->Delete(this, MOVING);
-		else if (GravityGuy::currentLvl == BOSS_1)
+		else if (GravityGuy::currentLvl == LEVEL_2)
+			Level2::scene->Delete(this, MOVING);
+		else if (GravityGuy::currentLvl == LEVEL_3)
+			Level3::scene->Delete(this, MOVING);
+		else if (GravityGuy::currentLvl == LEVEL_4)
+			Level4::scene->Delete(this, MOVING);
+		else if (GravityGuy::currentLvl == BOSS_LEVEL)
 			BossLVL1::scene->Delete(this, MOVING);
 	}
 

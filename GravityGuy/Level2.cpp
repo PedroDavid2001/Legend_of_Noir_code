@@ -1,22 +1,24 @@
 /**********************************************************************************
-// Level2 (Código Fonte)
+// Level1 (Código Fonte)
 //
-// Criação:     27 Set 2021
+// Criação:     14 Fev 2013
 // Atualização: 27 Set 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Nível 2 do jogo
+// Descrição:   Nível 1 do jogo
 //
 **********************************************************************************/
 
 #include "GravityGuy.h"
 #include "Home.h"
+#include "Level1.h"
 #include "Level2.h"
+#include "Level3.h"
+#include "BossLVL1.h"
 #include "GameOver.h"
 #include "Player.h"
 #include "Platform.h"
 #include "Background.h"
-
 #include <string>
 #include <fstream>
 using std::ifstream;
@@ -31,36 +33,44 @@ Scene* Level2::scene = nullptr;
 
 void Level2::Init()
 {
+    //setta o level atual na classe principal
+    GravityGuy::currentLvl = LEVEL_2;
+
     // cria gerenciador de cena
     scene = new Scene();
 
+    //cria letreiro com o hp do player
+    playerHp = new Font("Resources/Digital80.png");
+    playerHp->Spacing("Resources/Digital80.dat");
+
     // pano de fundo do jogo
-    Color dark{ 0.4f, 0.4f, 0.4f, 1.0f };
-    backg = new Background(dark);
+    backg = new Background(Color{ 1,1,1,1 });
     scene->Add(backg, STATIC);
 
     // adiciona jogador na cena
     scene->Add(GravityGuy::player, MOVING);
 
+
+    Platform* plat;
+    Color white{ 1,1,1,1 };
+
     // ----------------------
     // plataformas
     // ----------------------
 
-    Platform* plat;
     float posX, posY;
     uint  platType;
-
     ifstream fin;
     fin.open("Level2.txt");
-
     fin >> posX;
+
     while (!fin.eof())
     {
         if (fin.good())
         {
             // lê linha com informações da plataforma
             fin >> posY; fin >> platType;
-            plat = new Platform(posX, posY, platType, dark);
+            plat = new Platform(posX, posY, platType, white);
             scene->Add(plat, STATIC);
         }
         else
@@ -77,25 +87,42 @@ void Level2::Init()
 
     // ----------------------
 
-    GravityGuy::audio->Frequency(MUSIC, 1.00f);
-    GravityGuy::audio->Frequency(TRANSITION, 0.85f);
+    // inicia com música
+    GravityGuy::audio->Frequency(MUSIC, 1.0f);
+    GravityGuy::audio->Frequency(TRANSITION, 1.0f);
+    GravityGuy::audio->Play(MUSIC);
 }
 
 // ------------------------------------------------------------------------------
 
 void Level2::Update()
 {
-    if (window->KeyPress(VK_ESCAPE) || GravityGuy::player->Level() == 2 || window->KeyPress('N'))
+    float start = window->CenterX();
+
+    if (GravityGuy::playerPos < start) {
+        GravityGuy::playerRgt = true;
+        GravityGuy::playerLft = true;
+    }
+    else if (GravityGuy::playerPos >= start) {
+        GravityGuy::playerRgt = false;
+        GravityGuy::playerLft = false;
+    }
+
+    if (window->KeyPress(VK_ESCAPE))
     {
         GravityGuy::audio->Stop(MUSIC);
         GravityGuy::NextLevel<Home>();
         GravityGuy::player->Reset();
     }
-    else if ( GravityGuy::player->Top() > window->Height() )
+    else if (GravityGuy::player->Top() > window->Height())
     {
         GravityGuy::audio->Stop(MUSIC);
         GravityGuy::NextLevel<GameOver>();
         GravityGuy::player->Reset();
+    }
+    else if (window->KeyPress('N'))
+    {
+        GravityGuy::NextLevel<Level3>();
     }
     else
     {
@@ -108,6 +135,10 @@ void Level2::Update()
 
 void Level2::Draw()
 {
+    currentHp.str("");
+    currentHp << "Life  " << (int)GravityGuy::player->hp;
+    playerHp->Draw(100.0f * GravityGuy::totalScale, 650.0f * GravityGuy::totalScale, currentHp.str(), Color{ 1,1,1,1 }, Layer::FRONT, GravityGuy::totalScale, 0.0f);
+
     backg->Draw();
     scene->Draw();
 
@@ -121,6 +152,7 @@ void Level2::Finalize()
 {
     scene->Remove(GravityGuy::player, MOVING);
     delete scene;
+    delete playerHp;
 }
 
 // ------------------------------------------------------------------------------

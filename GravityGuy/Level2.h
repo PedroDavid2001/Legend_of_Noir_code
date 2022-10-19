@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Level2 (Arquivo de Cabeçalho)
+// Level1 (Arquivo de Cabeçalho)
 //
-// Criação:     27 Set 2021
+// Criação:     14 Fev 2013
 // Atualização: 27 Set 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Nível 2 do jogo
+// Descrição:   Nível 1 do jogo
 //
 **********************************************************************************/
 
@@ -18,7 +18,12 @@
 #include "Game.h"
 #include "Scene.h"
 #include "Player.h"
+#include "Font.h"
+#include "Timer.h"
+#include "Snow.h"
 #include "Background.h"
+#include <sstream>
+using std::stringstream;
 
 // ------------------------------------------------------------------------------
 
@@ -26,7 +31,10 @@ class Level2 : public Game
 {
 private:
     Background* backg = nullptr;   // pano de fundo animado
-
+    Snow* snow = nullptr;
+    Timer           timer;
+    Font* playerHp = nullptr;
+    stringstream	currentHp;
 public:
     static Scene* scene;           // cena do nível
 

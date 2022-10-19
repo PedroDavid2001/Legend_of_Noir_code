@@ -13,7 +13,7 @@
 #include "Home.h"
 #include "BossLVL1.h"
 #include "GameOver.h"
-#include "LevelVitor.h"
+#include "Level1.h"
 #include "Player.h"
 #include "Platform.h"
 #include "Background.h"
@@ -35,7 +35,7 @@ void BossLVL1::Init()
     GravityGuy::playerRgt = true;
     GravityGuy::playerLft = true;
 
-    GravityGuy::currentLvl = BOSS_1;
+    GravityGuy::currentLvl = BOSS_LEVEL;
 
     // cria gerenciador de cena
     scene = new Scene();
@@ -43,6 +43,10 @@ void BossLVL1::Init()
 	//cria letreiro com o hp do boss
 	bossHP = new Font("Resources/Digital80.png");
 	bossHP->Spacing("Resources/Digital80.dat");
+
+	//cria letreiro com o hp do player
+	playerHp = new Font("Resources/Digital80.png");
+	playerHp->Spacing("Resources/Digital80.dat");
 
     // pano de fundo do jogo
     Color dark{ 0.4f, 0.4f, 0.4f, 1.0f };
@@ -76,7 +80,7 @@ void BossLVL1::Update()
     if (window->KeyPress(VK_ESCAPE) || window->KeyPress('N'))
     {
         GravityGuy::audio->Stop(MUSIC);
-        GravityGuy::NextLevel<LevelVitor>();   // trocar aqui pelas outras fases
+        GravityGuy::NextLevel<Level1>();   // trocar aqui pelas outras fases
         GravityGuy::player->Reset();
     }
     else if ( GravityGuy::player->hp <= 0 )
@@ -96,10 +100,15 @@ void BossLVL1::Update()
 
 void BossLVL1::Draw()
 {
-	currentHP.str("");
-	currentHP << "BOSS HP " << boss->hp;
-	bossHP->Draw(1000.0f * GravityGuy::totalScale, 50.0f * GravityGuy::totalScale, currentHP.str(), Color{ 1,1,1,1 }, Layer::FRONT, (GravityGuy::totalScale / 2.0f), 0.0f);
-    backg->Draw();
+	currentBossHP.str("");
+	currentBossHP << "BOSS HP " << boss->hp;
+	bossHP->Draw(1000.0f * GravityGuy::totalScale, 50.0f * GravityGuy::totalScale, currentBossHP.str(), Color{ 1,1,1,1 }, Layer::FRONT, (GravityGuy::totalScale / 2.0f), 0.0f);
+    
+	currentHp.str("");
+	currentHp << "Life  " << (int)GravityGuy::player->hp;
+	playerHp->Draw(100.0f * GravityGuy::totalScale, 650.0f * GravityGuy::totalScale, currentHp.str(), Color{ 1,1,1,1 }, Layer::FRONT, GravityGuy::totalScale, 0.0f);
+	
+	backg->Draw();
     scene->Draw();
 
     if (GravityGuy::viewBBox)

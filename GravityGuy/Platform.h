@@ -34,7 +34,8 @@ enum PLATTYPES {
     PLAT_400X100, 
     PLAT_600X300, 
     PLAT_400X150, 
-    PLAT_400X400
+    PLAT_400X400,
+	SIGN
 };
 
 // ---------------------------------------------------------------------------------
@@ -74,7 +75,7 @@ public:
 // Função Membro Inline
 
 inline void Platform::Draw()
-{ platform->Draw(x, y, z, GravityGuy::totalScale, 0.0f, color); }
+{ platform->Draw(x, y, Layer::MIDDLE, GravityGuy::totalScale, 0.0f, color); }
 
 inline float Platform::Height() 
 {

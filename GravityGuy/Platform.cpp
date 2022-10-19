@@ -52,6 +52,9 @@ Platform::Platform(float posX, float posY, uint plat, Color tint) : color(tint)
     case PLAT_600X300:  
         platform = new Sprite("Resources/plat600x300.png"); platType = PLAT_600X300;
         break;
+    case SIGN:
+        platform = new Sprite("Resources/sign.png"); platType = SIGN;
+        break;
     }
     
     BBox( new Rect( 

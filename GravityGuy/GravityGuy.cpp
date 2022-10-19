@@ -97,8 +97,8 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
     // configura o motor
     //engine->window->Mode(WINDOWED);
-    //engine->window->Size(640, 480);
-    engine->window->Color(30, 50, 80);
+    //engine->window->Size(1280, 720);
+    engine->window->Color(30, 30, 30);
     engine->window->Title("Legend Of Noir");
     engine->window->Icon(IDI_ICON);
     engine->window->Cursor(IDC_CURSOR);

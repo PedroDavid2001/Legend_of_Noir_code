@@ -22,6 +22,7 @@
 #include "Timer.h"
 #include "Snow.h"
 #include "Background.h"
+#include "EndLevel.h"
 #include <sstream>
 using std::stringstream;
 
@@ -33,8 +34,15 @@ private:
     Background*     backg = nullptr;   // pano de fundo animado
     Snow*           snow = nullptr;
     Timer           timer;
-    Font*           position = nullptr;
-    stringstream	currentPos;
+    Font*           playerHp = nullptr;
+    Font*           controls = nullptr;
+    Font*           controls2 = nullptr;
+    Font*           controls3 = nullptr;
+    EndLevel*       endLvl = nullptr;
+    stringstream	currentHp;
+    stringstream    ctrls;
+    stringstream    ctrls2;
+    stringstream    ctrls3;
 public:
     static Scene* scene;           // cena do nível
 

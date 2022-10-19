@@ -22,7 +22,7 @@
 
 // ------------------------------------------------------------------------------
 
-enum PlayerState { IDLE, IDLE_INV, MOVE, MOVE_INV, JUMP, JUMP_INV, ATACK, HURT };
+enum PlayerState { IDLE, IDLE_INV, MOVE, MOVE_INV, JUMP, JUMP_INV, ATACK, ATACK_INV, HURT, ATK_JMP, ATK_JMP_INV };
 
 // ---------------------------------------------------------------------------------
 
@@ -32,14 +32,15 @@ private:
     TileSet   * tileset;                // folha de sprites do personagem
     Animation * anim;                   // animação do personagem
     Timer		jumpTimer;				//timer usado para definir o tempo do pulo
-    Timer       shootTimer;
     float       jumpForce;
     float       gravity;
 	bool        canJump;				//verifica se o player está sobre uma plataforma para poder pular
     bool        direction;              //left = false; right = true
     float       scale;
-	
+    bool        shooted;
+    
 public:
+    bool        showCtrls;              //exibeControles na tela
     uint        hp;
     uint		state;
     bool        left;                   //verifica se pode ir para esquerda
@@ -97,7 +98,7 @@ inline float Player::Left()
 }
 
 inline void Player::Draw()
-{ anim->Draw(x, y, z, scale); }
+{ anim->Draw(x, y, 0.45f, scale); }
 
 // ---------------------------------------------------------------------------------
 
