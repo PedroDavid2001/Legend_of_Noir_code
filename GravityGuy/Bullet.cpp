@@ -41,9 +41,9 @@ Bullet::Bullet(bool direction, float scale)
     ));
     
     if(direction)
-        MoveTo(GravityGuy::player->Right(), GravityGuy::player->Y() - 10 * GravityGuy::totalScale, Layer::FRONT);
+        MoveTo(GravityGuy::player->Right(), GravityGuy::player->Y(), Layer::FRONT);
     else
-        MoveTo(GravityGuy::player->Left(), GravityGuy::player->Y() - 10 * GravityGuy::totalScale, Layer::FRONT);
+        MoveTo(GravityGuy::player->Left(), GravityGuy::player->Y(), Layer::FRONT);
 }
 
 // ---------------------------------------------------------------------------------
@@ -92,7 +92,6 @@ void Bullet::Update()
             Translate(-700.0f * gameTime, 0);
     }
     
-
     //deleta quando sair da tela
 	if (x < 0 || x > window->Width()) {
 		if (GravityGuy::currentLvl == LEVEL_1)

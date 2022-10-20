@@ -90,6 +90,11 @@ void Level3::Init()
 
     // ----------------------
 
+    endLvl = new EndLevel(11535.0f * GravityGuy::totalScale, 290.0f * GravityGuy::totalScale);
+    scene->Add(endLvl, MOVING);
+
+    // ----------------------
+
     // inicia com música
     GravityGuy::audio->Frequency(MUSIC, 1.0f);
     GravityGuy::audio->Frequency(TRANSITION, 1.0f);
@@ -111,7 +116,11 @@ void Level3::Update()
         GravityGuy::playerLft = false;
     }
 
-    if (window->KeyPress(VK_ESCAPE))
+    if (scene->Collision(GravityGuy::player, endLvl)) {
+        GravityGuy::NextLevel<Level4>();
+        GravityGuy::player->Reset();
+    }
+    else if (window->KeyPress(VK_ESCAPE))
     {
         GravityGuy::audio->Stop(MUSIC);
         GravityGuy::NextLevel<Home>();
@@ -126,6 +135,7 @@ void Level3::Update()
     else if (window->KeyPress('N'))
     {
         GravityGuy::NextLevel<Level4>();
+        GravityGuy::player->Reset();
     }
     else
     {

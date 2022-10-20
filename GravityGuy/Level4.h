@@ -22,6 +22,7 @@
 #include "Timer.h"
 #include "Snow.h"
 #include "Background.h"
+#include "EndLevel.h"
 #include <sstream>
 using std::stringstream;
 
@@ -34,6 +35,7 @@ private:
     Snow* snow = nullptr;
     Timer           timer;
     Font* playerHp = nullptr;
+    EndLevel* endLvl = nullptr;
     stringstream	currentHp;
 public:
     static Scene* scene;           // cena do nível

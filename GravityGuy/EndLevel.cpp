@@ -3,7 +3,7 @@
 EndLevel::EndLevel(float x, float y) {
 
 	tileset = new TileSet("Resources/level_end.png", 50, 60, 5, 5);
-	anim = new Animation(tileset, 0.06f, true);
+	anim = new Animation(tileset, 0.1f, true);
 
 	// cria bounding box
 	BBox(new Rect(

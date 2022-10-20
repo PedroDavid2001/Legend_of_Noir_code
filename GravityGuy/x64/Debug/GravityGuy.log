@@ -1,2 +1,4 @@
-﻿  Background.cpp
+﻿  Boss.cpp
+  Player.cpp
+  Spikes.cpp
   GravityGuy.vcxproj -> C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\x64\Debug\GravityGuy.exe

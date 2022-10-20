@@ -80,7 +80,7 @@ void BossLVL1::Update()
     if (window->KeyPress(VK_ESCAPE) || window->KeyPress('N'))
     {
         GravityGuy::audio->Stop(MUSIC);
-        GravityGuy::NextLevel<Level1>();   // trocar aqui pelas outras fases
+        GravityGuy::NextLevel<Home>();   // trocar aqui pelas outras fases
         GravityGuy::player->Reset();
     }
     else if ( GravityGuy::player->hp <= 0 )

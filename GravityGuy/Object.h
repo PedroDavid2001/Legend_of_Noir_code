@@ -24,7 +24,7 @@
 #include "Geometry.h"           // todo objeto deve ter uma bounding box
 
 // -----------------------------------------------------------------------------
-enum Type{ BULLET, PLAYER, BOSS, PLATFORM};
+enum Type{ BULLET, BOSS, PLAYER, PLATFORM, SPIKE };
 // -----------------------------------------------------------------------------
 class Object
 {

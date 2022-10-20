@@ -182,6 +182,7 @@ void Level1::Update()
     else if (window->KeyPress('N'))
     {
         GravityGuy::NextLevel<Level2>();
+        GravityGuy::player->Reset();
     }
     else
     {

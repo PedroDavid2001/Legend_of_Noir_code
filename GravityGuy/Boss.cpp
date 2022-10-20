@@ -15,6 +15,7 @@
 #include "GravityGuy.h"
 #include "Bullet.h"
 #include "BossLVL1.h"
+#include "Spikes.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -22,6 +23,7 @@ Boss::Boss(uint boss)
 {
 	type = BOSS;
 	this->boss = boss;
+	atkTimer.Start();
 
 	switch (boss) {
 	case BANSHEE:
@@ -41,9 +43,9 @@ Boss::Boss(uint boss)
 			this->Height() / 2.0f
 		));
 		hp = 200;
-
+		direction = false;
 		// posição inicial da banshee
-		MoveTo(window->Width() - (this->Width() / 2.0f), ( 450.0f * GravityGuy::totalScale ), 0.55f);
+		MoveTo(window->Width() - (this->Width() / 2.0f), ( 420.0f * GravityGuy::totalScale ), 0.55f);
 		
 		break;
 	}
@@ -64,6 +66,13 @@ Boss::~Boss()
 
 void Boss::Update()
 {
+	if (atkTimer.Elapsed() > 3.0f) {
+		Spikes* spk = new Spikes(direction, this->X());
+		BossLVL1::scene->Add(spk, MOVING);
+		atkTimer.Reset();
+		atkTimer.Start();
+	}
+
 	// atualiza animação
 	anim->Select(0);
 	anim->NextFrame();

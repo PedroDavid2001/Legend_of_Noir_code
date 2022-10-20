@@ -26,6 +26,7 @@ void GameOver::Init()
 
 void GameOver::Update()
 {
+    GravityGuy::player->hp = 4;
 	//espaço para definir se o jogador que sair do level ou voltar para o ultimo checkpoint
     if (window->KeyPress(VK_RETURN))
         GravityGuy::NextLevel<Level1>();

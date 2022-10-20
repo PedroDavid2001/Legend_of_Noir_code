@@ -16,6 +16,7 @@
 #include "Level1.h"
 #include "Level2.h"
 #include "Level3.h"
+#include "Spikes.h"
 #include "Level4.h"
 #include "BossLVL1.h"
 #include "Bullet.h"
@@ -159,6 +160,13 @@ void Player::OnCollision(Object * obj)
 			showCtrls = true;
 		}
 		
+	}
+	else if (obj->type == SPIKE) {
+		Spikes* spk = (Spikes*)obj;
+		if (!spk->touched) {
+			hp--;
+			spk->touched = true;
+		}
 	}
 }
 
@@ -308,7 +316,7 @@ void Player::Update()
 		
 	}
 
-    if(state != JUMP && state != JUMP_INV)
+    if(state != JUMP && state != JUMP_INV && (state != ATK_JMP && state != ATK_JMP_INV))
 		// ação da gravidade sobre o personagem 
 		Translate(0, gravity * scale * gameTime);
 

@@ -18,6 +18,7 @@
 #include "Object.h"                                     // interface de Object
 #include "TileSet.h"                                     // desenho de sprites
 #include "Animation.h"
+#include "Timer.h"
 #include "GravityGuy.h"
 
 // ---------------------------------------------------------------------------------
@@ -33,6 +34,8 @@ class Boss : public Object
 private:
     TileSet* tileSet = nullptr;             // sprite da plataforma
     Animation* anim = nullptr;
+    Timer atkTimer;
+    bool direction;
 public:
 	uint hp;
 	uint boss;                              //armazena o boss atual
