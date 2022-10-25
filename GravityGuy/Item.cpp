@@ -10,13 +10,14 @@
 **********************************************************************************/
 
 #include "Item.h"
+#include "GravityGuy.h"
 
 // ---------------------------------------------------------------------------------
 
-Item::Item(float posX, float posY, float width, uint menuId, string imgFile)
+Item::Item(float posX, float posY, float width, uint menuId, string imgFile, float height)
 {
     // cria tileset e animação
-    tileset = new TileSet(imgFile, width, 75, 1, 4);
+    tileset = new TileSet(imgFile, width, height, 1, 4);
     animation = new Animation(tileset, 0.15f, true); 
 
     // define sequências de animação
@@ -73,7 +74,7 @@ void Item::Update()
 
 void Item::Draw()
 {
-    animation->Draw(x, y, z);
+    animation->Draw(x, y, z, GravityGuy::totalScale);
 }
 
 // -------------------------------------------------------------------------------

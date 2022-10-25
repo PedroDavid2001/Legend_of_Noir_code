@@ -1,4 +1,42 @@
-﻿  Boss.cpp
+﻿  compilation object save succeeded; see D:\Users\vitor\git\Game_Unidade_2\GravityGuy\Shaders\Pixel.cso
+  compilation object save succeeded; see D:\Users\vitor\git\Game_Unidade_2\GravityGuy\Shaders\Vertex.cso
+  Animation.cpp
+  Audio.cpp
+  Background.cpp
+  Boss.cpp
+  Bullet.cpp
+  EndLevel.cpp
+  Enemies.cpp
+  Engine.cpp
+  Font.cpp
+  Game.cpp
+  GameOver.cpp
+  Geometry.cpp
+  Graphics.cpp
+  GravityGuy.cpp
+  Home.cpp
+  Image.cpp
+  Item.cpp
+  Level1.cpp
+  BossLVL1.cpp
+  Level2.cpp
+D:\Users\vitor\git\Game_Unidade_2\GravityGuy\Item.cpp(20,43): warning C4244: 'argumento': conversão de 'float' para 'uint', possível perda de dados
+D:\Users\vitor\git\Game_Unidade_2\GravityGuy\Item.cpp(20,36): warning C4244: 'argumento': conversão de 'float' para 'uint', possível perda de dados
+  Level3.cpp
+  Level4.cpp
+  Mouse.cpp
+  NextLevel.cpp
+  Object.cpp
+  Platform.cpp
   Player.cpp
+  Renderer.cpp
+  Scene.cpp
+  Snow.cpp
+  Sound.cpp
   Spikes.cpp
-  GravityGuy.vcxproj -> C:\Users\pedro\OneDrive\Documents\Game_Unidade_2\x64\Debug\GravityGuy.exe
+  Sprite.cpp
+  Texture.cpp
+  TileSet.cpp
+  Timer.cpp
+  Window.cpp
+  GravityGuy.vcxproj -> D:\Users\vitor\git\Game_Unidade_2\x64\Debug\GravityGuy.exe

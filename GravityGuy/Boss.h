@@ -27,6 +27,14 @@ enum Bosses {
     BANSHEE     //nome do boss
 };
 
+enum BossStates {
+	IDLE_B,
+	MOVE_B,
+	ATACK_B,
+	IDLE_B_INV,
+	MOVE_B_INV,
+	ATACK_B_INV
+};
 // ---------------------------------------------------------------------------------
 
 class Boss : public Object
@@ -35,8 +43,10 @@ private:
     TileSet* tileSet = nullptr;             // sprite da plataforma
     Animation* anim = nullptr;
     Timer atkTimer;
+    bool spikesUsed;
     bool direction;
 public:
+	uint state;
 	uint hp;
 	uint boss;                              //armazena o boss atual
     Boss( uint boss );                      // construtor    

@@ -13,6 +13,7 @@
 #include "Home.h"
 #include "Level1.h"
 #include "Level2.h"
+#include "NextLevel.h"
 #include "BossLVL1.h"
 #include "GameOver.h"
 #include "Player.h"
@@ -47,6 +48,10 @@ void Level1::Init()
     //cria letreiro com o hp do player
     playerHp = new Font("Resources/Digital80.png");
     playerHp->Spacing("Resources/Digital80.dat");
+
+    //cria letreiro com o score do player
+    playerScore = new Font("Resources/Digital80.png");
+    playerScore->Spacing("Resources/Digital80.dat");
 
     //cria letreiro com os controles
     controls = new Font("Resources/Digital80.png");
@@ -121,7 +126,7 @@ void Level1::Init()
 			// lê linha com informações da plataforma
 			fin >> posY; fin >> enemyType;
 			enemy = new Enemies(posX, posY, enemyType, white);
-			scene->Add(enemy, STATIC);
+			scene->Add(enemy, MOVING);
 		}
 		else
 		{
@@ -164,13 +169,19 @@ void Level1::Update()
     }
 
     if (scene->Collision(GravityGuy::player, endLvl)) {
-        GravityGuy::NextLevel<Level2>();
+        GravityGuy::NextLevel<NextLevel>();
         GravityGuy::player->Reset();
     }
     else if (window->KeyPress(VK_ESCAPE))
     {
         GravityGuy::audio->Stop(MUSIC);
         GravityGuy::NextLevel<Home>();
+        GravityGuy::player->Reset();
+    }
+    else if (GravityGuy::player->hp <= 0)
+    {
+        GravityGuy::audio->Stop(MUSIC);
+        GravityGuy::NextLevel<GameOver>();
         GravityGuy::player->Reset();
     }
     else if ( GravityGuy::player->Top() > window->Height() )
@@ -181,7 +192,7 @@ void Level1::Update()
     }
     else if (window->KeyPress('N'))
     {
-        GravityGuy::NextLevel<Level2>();
+        GravityGuy::NextLevel<NextLevel>();
         GravityGuy::player->Reset();
     }
     else
@@ -198,6 +209,12 @@ void Level1::Draw()
     currentHp.str("");
     currentHp << "Life  " << (int)GravityGuy::player->hp;
     playerHp->Draw(100.0f * GravityGuy::totalScale, 650.0f * GravityGuy::totalScale, currentHp.str(), Color{1,1,1,1}, Layer::FRONT, GravityGuy::totalScale, 0.0f);
+
+    currentScore.str("");
+    currentScore << "Score  " << (int)GravityGuy::player->score;
+    playerScore->Draw(100.0f * GravityGuy::totalScale, 50.0f * GravityGuy::totalScale, currentScore.str(), Color{ 1,1,1,1 }, Layer::FRONT, GravityGuy::totalScale, 0.0f);
+
+
 
     if (GravityGuy::player->showCtrls)
     {

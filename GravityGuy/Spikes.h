@@ -18,6 +18,14 @@
 #include "Animation.h"                  // animação de sprites
 #include "TileSet.h"
 #include "GravityGuy.h"
+#include "Timer.h"
+
+// ------------------------------------------------------------------------------
+
+enum SpikeType {
+    GROUND,
+    FLOWER
+};
 
 // ------------------------------------------------------------------------------
 
@@ -25,11 +33,14 @@ class Spikes : public Object
 {
 private:
     TileSet* tileset;
+    Timer growTimer;
     Animation* anim;
     bool direction;             //left = false; right = true
 public:
+    uint spykeType;
     bool touched;               //indica se encostou no player
-    Spikes(bool direction, float xx);
+    bool grow;
+    Spikes(bool direction, float xx, float yy, uint spykeType);
     ~Spikes();
     void Update();
     void Draw();

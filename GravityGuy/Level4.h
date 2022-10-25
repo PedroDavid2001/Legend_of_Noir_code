@@ -35,8 +35,11 @@ private:
     Snow* snow = nullptr;
     Timer           timer;
     Font* playerHp = nullptr;
+    Font* playerScore = nullptr;
     EndLevel* endLvl = nullptr;
     stringstream	currentHp;
+    stringstream	currentScore;
+
 public:
     static Scene* scene;           // cena do nível
 

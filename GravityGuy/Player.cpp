@@ -20,6 +20,7 @@
 #include "Level4.h"
 #include "BossLVL1.h"
 #include "Bullet.h"
+#include "Enemies.h"
 #define PLAYER_VELOCITY	350.0f
 
 // ---------------------------------------------------------------------------------
@@ -56,9 +57,9 @@ Player::Player(float scale)
 
     // cria bounding box
     BBox( new Rect(
-		-1.0f * this->Width() / 2.0f,
+		-1.0f * this->Width() / 3.0f,
 		-1.0f * this->Height() / 2.0f,
-		this->Width() / 2.0f,
+		this->Width() / 3.0f,
 		this->Height() / 2.0f
 	));
     
@@ -167,6 +168,14 @@ void Player::OnCollision(Object * obj)
 			hp--;
 			spk->touched = true;
 		}
+	}else if (obj->type == ENEMYS) {
+		Enemies* enemies = (Enemies*)obj;
+		if (!enemies->touched) {
+			hp--;
+			enemies->touched = true;
+			enemies->time.Start();
+
+		}
 	}
 }
 
@@ -174,6 +183,12 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
+	if (hp > 0)
+	{
+		score += 1 * gameTime;
+
+	}
+
 	//controla o delay dos diferentes estados 
 	if (state == IDLE || state == IDLE_INV)
 		anim->Delay(0.16f);
@@ -339,6 +354,7 @@ void Player::Update()
 	if (!shooted && (anim->Frame() == 103 || anim->Frame() == 76 || anim->Frame() == 113 || anim->Frame() == 120)) {
 
 		Bullet* bullet = nullptr;
+		GravityGuy::audio->Play(ARROW_FX, false);
 
 		if (direction)
 			bullet = new Bullet(true, scale);

@@ -35,11 +35,13 @@ private:
     Snow*           snow = nullptr;
     Timer           timer;
     Font*           playerHp = nullptr;
+    Font*           playerScore = nullptr;
     Font*           controls = nullptr;
     Font*           controls2 = nullptr;
     Font*           controls3 = nullptr;
     EndLevel*       endLvl = nullptr;
     stringstream	currentHp;
+    stringstream	currentScore;
     stringstream    ctrls;
     stringstream    ctrls2;
     stringstream    ctrls3;

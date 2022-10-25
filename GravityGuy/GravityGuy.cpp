@@ -37,7 +37,9 @@ void GravityGuy::Init()
     audio->Add(MENU, "Resources/Menu.wav");
     audio->Add(MUSIC, "Resources/Music.wav");
     audio->Add(TRANSITION, "Resources/Transition.wav");
-
+    audio->Add(ARROW_FX, "Resources/arrow.wav"); 
+    audio->Add(BOSS_MSC, "Resources/boss_msc.wav");
+    
     float xScale = window->Width() / 1280.0f;
     float yScale = window->Height() / 720.0f;
 

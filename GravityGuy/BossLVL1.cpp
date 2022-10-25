@@ -13,7 +13,7 @@
 #include "Home.h"
 #include "BossLVL1.h"
 #include "GameOver.h"
-#include "Level1.h"
+#include "NextLevel.h"
 #include "Player.h"
 #include "Platform.h"
 #include "Background.h"
@@ -68,25 +68,37 @@ void BossLVL1::Init()
     scene->Add(plat, MOVING);
 
     // ----------------------
-
-    GravityGuy::audio->Frequency(MUSIC, 1.00f);
-    GravityGuy::audio->Frequency(TRANSITION, 0.85f);
+    GravityGuy::audio->Stop(MUSIC);//para a musica atual para iniciar a do boss
+    GravityGuy::audio->Play(BOSS_MSC, true);
+    GravityGuy::audio->Volume(BOSS_MSC, 0.4f);
 }
 
 // ------------------------------------------------------------------------------
 
 void BossLVL1::Update()
 {
-    if (window->KeyPress(VK_ESCAPE) || window->KeyPress('N'))
+    if (window->KeyPress('N'))
     {
-        GravityGuy::audio->Stop(MUSIC);
-        GravityGuy::NextLevel<Home>();   // trocar aqui pelas outras fases
+        GravityGuy::audio->Stop(BOSS_MSC);
+        GravityGuy::NextLevel<NextLevel>();   // trocar aqui pelas outras fases
+        GravityGuy::player->Reset();
+    }
+    else if (window->KeyPress(VK_ESCAPE))
+    {
+        GravityGuy::audio->Stop(BOSS_MSC);
+        GravityGuy::NextLevel<Home>();
         GravityGuy::player->Reset();
     }
     else if ( GravityGuy::player->hp <= 0 )
     {
-        GravityGuy::audio->Stop(MUSIC);
+        GravityGuy::audio->Stop(BOSS_MSC);
         GravityGuy::NextLevel<GameOver>();
+        GravityGuy::player->Reset();
+    }
+    else if (boss->hp <= 0)
+    {
+        GravityGuy::audio->Stop(BOSS_MSC);
+        GravityGuy::NextLevel<NextLevel>();   // trocar aqui pelas outras fases
         GravityGuy::player->Reset();
     }
     else

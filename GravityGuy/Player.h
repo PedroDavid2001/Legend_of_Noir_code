@@ -42,6 +42,7 @@ private:
 public:
     bool        showCtrls;              //exibeControles na tela
     uint        hp;
+    float        score;
     uint		state;
     bool        left;                   //verifica se pode ir para esquerda
     bool        right;                  //verifica se pode ir para direita

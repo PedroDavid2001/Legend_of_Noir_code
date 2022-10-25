@@ -73,6 +73,7 @@ void Home::Update()
             {
                 if (menu[i]->Type() == START) {
                     GravityGuy::audio->Stop(MENU);
+					GravityGuy::player->hp = 4;
                     GravityGuy::NextLevel<Level1>();
                     break;
                 }

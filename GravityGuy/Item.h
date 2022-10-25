@@ -32,7 +32,7 @@ private:
     Animation * animation;              // animação do menu
     
 public:
-    Item(float posX, float posY, float width, uint menuId, string imgFile);
+    Item(float posX, float posY, float width, uint menuId, string imgFile, float height = 75.0f);
     ~Item();
 
     void Select();                      // seleciona menu

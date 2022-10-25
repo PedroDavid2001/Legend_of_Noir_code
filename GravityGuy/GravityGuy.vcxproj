@@ -175,6 +175,7 @@
     <ClCompile Include="Level3.cpp" />
     <ClCompile Include="Level4.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="NextLevel.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Level3.h" />
     <ClInclude Include="Level4.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="NextLevel.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />

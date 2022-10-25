@@ -13,6 +13,7 @@
 #include "Home.h"
 #include "Level1.h"
 #include "Level2.h"
+#include "NextLevel.h"
 #include "Level3.h"
 #include "BossLVL1.h"
 #include "GameOver.h"
@@ -21,6 +22,7 @@
 #include "Background.h"
 #include <string>
 #include <fstream>
+#include "Enemies.h"
 using std::ifstream;
 using std::string;
 
@@ -42,6 +44,10 @@ void Level2::Init()
     //cria letreiro com o hp do player
     playerHp = new Font("Resources/Digital80.png");
     playerHp->Spacing("Resources/Digital80.dat");
+
+    //cria letreiro com o score do player
+    playerScore = new Font("Resources/Digital80.png");
+    playerScore->Spacing("Resources/Digital80.dat");
 
     // pano de fundo do jogo
     backg = new Background(Color{ 1,1,1,1 });
@@ -87,6 +93,37 @@ void Level2::Init()
 
     // ----------------------
 
+
+    Enemies* enemy;
+
+    uint  enemyType;
+    fin.open("InimigosLevel2.txt");
+    fin >> posX;
+
+    while (!fin.eof())
+    {
+        if (fin.good())
+        {
+            // lê linha com informações da plataforma
+            fin >> posY; fin >> enemyType;
+            enemy = new Enemies(posX, posY, enemyType, white);
+            scene->Add(enemy, MOVING);
+        }
+        else
+        {
+            // ignora comentários
+            fin.clear();
+            char temp[80];
+            fin.getline(temp, 80);
+        }
+
+        fin >> posX;
+    }
+    fin.close();
+
+    // ----------------------
+
+
     endLvl = new EndLevel(10825.0f * GravityGuy::totalScale, 390.0f * GravityGuy::totalScale);
     scene->Add(endLvl, MOVING);
 
@@ -114,13 +151,19 @@ void Level2::Update()
     }
 
     if (scene->Collision(GravityGuy::player, endLvl)) {
-        GravityGuy::NextLevel<Level3>();
+        GravityGuy::NextLevel<NextLevel>();
         GravityGuy::player->Reset();
     }
     else if (window->KeyPress(VK_ESCAPE))
     {
         GravityGuy::audio->Stop(MUSIC);
         GravityGuy::NextLevel<Home>();
+        GravityGuy::player->Reset();
+    }
+    else if (GravityGuy::player->hp <= 0)
+    {
+        GravityGuy::audio->Stop(MUSIC);
+        GravityGuy::NextLevel<GameOver>();
         GravityGuy::player->Reset();
     }
     else if (GravityGuy::player->Top() > window->Height())
@@ -131,7 +174,7 @@ void Level2::Update()
     }
     else if (window->KeyPress('N'))
     {
-        GravityGuy::NextLevel<Level3>();
+        GravityGuy::NextLevel<NextLevel>();
         GravityGuy::player->Reset();
     }
     else
@@ -148,6 +191,12 @@ void Level2::Draw()
     currentHp.str("");
     currentHp << "Life  " << (int)GravityGuy::player->hp;
     playerHp->Draw(100.0f * GravityGuy::totalScale, 650.0f * GravityGuy::totalScale, currentHp.str(), Color{ 1,1,1,1 }, Layer::FRONT, GravityGuy::totalScale, 0.0f);
+
+    currentScore.str("");
+    currentScore << "Score  " << (int)GravityGuy::player->score;
+    playerScore->Draw(100.0f * GravityGuy::totalScale, 50.0f * GravityGuy::totalScale, currentScore.str(), Color{ 1,1,1,1 }, Layer::FRONT, GravityGuy::totalScale, 0.0f);
+
+
 
     backg->Draw();
     scene->Draw();

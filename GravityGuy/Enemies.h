@@ -48,13 +48,18 @@ public:
     float direcao = 1.0f;                   //direção do movimento (inverte quando a plataforma alcança um limite)
     uint enemyType;
     uint state;
-
+    bool touched;
+    bool touchedBullet;
+    Timer time;
+    uint hp;
     Enemies(float posX, float posY,
         uint plat,
         Color tint);                   // construtor    
     ~Enemies();                            // destrutor
 
     void Update();                          // atualização do objeto
+
+    
     void Draw();                            // desenho do objeto
     float Height();
     float Width();

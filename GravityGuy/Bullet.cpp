@@ -15,6 +15,7 @@
 #include "Level3.h"
 #include "Level4.h"
 #include "BossLVL1.h"
+#include "Enemies.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -71,6 +72,54 @@ void Bullet::OnCollision(Object* obj) {
 				BossLVL1::scene->Delete(this, MOVING);
 		}
 	}
+
+    if (obj->type == ENEMYS) {
+        
+        float xDiff = x - obj->X();
+
+        if (xDiff < 0)
+            xDiff = -xDiff;
+
+        if (xDiff <= 10 * GravityGuy::totalScale) {
+            Enemies* enemies = (Enemies*)obj;
+           
+            if (GravityGuy::currentLvl == LEVEL_1) {
+                Level1::scene->Delete(enemies, MOVING);
+
+                Level1::scene->Delete(this, MOVING);
+
+            }
+            else if (GravityGuy::currentLvl == LEVEL_2) {
+                Level2::scene->Delete(enemies, MOVING);
+                Level2::scene->Delete(this, MOVING);
+
+            }
+            else if (GravityGuy::currentLvl == LEVEL_3) {
+                Level3::scene->Delete(this, MOVING);
+
+                Level3::scene->Delete(enemies, MOVING);
+
+
+            }
+            else if (GravityGuy::currentLvl == LEVEL_4) {
+                Level4::scene->Delete(enemies, MOVING);
+
+                Level4::scene->Delete(this, MOVING);
+
+
+
+            }
+            else if (GravityGuy::currentLvl == BOSS_LEVEL) {
+                BossLVL1::scene->Delete(enemies, MOVING);
+
+                BossLVL1::scene->Delete(this, MOVING);
+
+
+
+            }
+        }
+
+    }
 }
 
 // ---------------------------------------------------------------------------------
