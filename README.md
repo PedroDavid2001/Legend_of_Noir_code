@@ -1,4 +1,4 @@
-* Game Legend of Noir
+Legend of Noir
 
 Second game of the game programming discipline. Use the .sln file to open the game in Visual Studio 2022 or 2019
 
